@@ -1,0 +1,109 @@
+---
+title: "CRDT Covid"
+format: html
+editor: visual
+---
+
+```{r}
+rm(list = ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
+ctcov<-read.csv(here("data","CRDT Data - CRDT.csv"))
+glimpse(ctcov)
+```
+
+```{r}
+ctcov<-ctcov|>
+  rename_with(~str_remove(.,"thnicity_"))
+ctcovlong <- ctcov |>
+  pivot_longer(cols = matches("_"), # Keep column, reshape others
+               names_to = "Race", # New column for race names
+               values_to = "Count")# New column for counts
+ctcovlong<-ctcovlong|>
+  separate(Race, into = c("Type","Race"))
+ctcov2<- ctcovlong |>
+  pivot_wider(names_from = Type, values_from = Count)
+```
+
+```{r}
+ctcov2 <- ctcov2 |>
+  mutate(State = ifelse(State == "DC", "District of Columbia", 
+                        state.name[match(State, state.abb)]))# Convert abbreviations to full names
+ctcov2 <-ctcov2|>
+  mutate(State = replace(State, is.na(State), "Territory"))
+```
+
+```{r}
+ctcov2 <- ctcov2|>
+  mutate(Region = case_when(
+    State %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", "Connecticut", 
+                 "New York", "New Jersey", "Pennsylvania") ~ "Northeast",
+    State == "District of Columbia" ~ "Northeast",  # Assign DC to a region
+    State %in% c("Illinois", "Indiana", "Michigan", "Ohio", "Wisconsin", "Iowa", "Minnesota", 
+                 "Missouri", "North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Midwest",
+    State %in% c("Delaware", "Maryland", "Virginia", "West Virginia", "Kentucky", "North Carolina", 
+                 "South Carolina", "Tennessee", "Georgia", "Florida", "Alabama", "Mississippi", 
+                 "Arkansas", "Louisiana", "Texas", "Oklahoma") ~ "South",
+    State %in% c("Montana", "Idaho", "Wyoming", "Colorado", "New Mexico", "Arizona", "Utah", "Nevada") ~ "West",
+    State %in% c("Washington", "Oregon", "California", "Alaska", "Hawaii") ~ "Pacific",
+    State == "Territory" ~ "Territories of USA",
+    TRUE ~ "Other"
+  ))
+
+```
+
+```{r}
+ctcov2 <- ctcov2|>
+  mutate(Gov_Control = case_when(
+    State %in% c("Alabama", "Alaska", "Arkansas", "Florida", "Georgia", 
+                 "Idaho", "Indiana", "Iowa", "Mississippi", "Missouri", "Montana", 
+                 "Nebraska", "North Dakota", "Ohio", "Oklahoma", "South Carolina", 
+                 "South Dakota", "Tennessee", "Texas", "Utah", "West Virginia", 
+                 "Wyoming", "New Hampshire") ~ "Red",
+                 
+    State %in% c("California", "Colorado", "Connecticut", "Delaware", "Hawaii", 
+                 "Illinois", "Maine", "Massachusetts", "Nevada", "New Jersey", 
+                 "New Mexico", "New York", "Oregon", "Rhode Island", "Vermont", 
+                 "Virginia", "Washington", "District of Columbia") ~ "Blue",
+                 
+    State %in% c("Arizona", "Michigan", "Minnesota", "North Carolina", "Pennsylvania", 
+                 "Wisconsin", "Kentucky", "Louisiana", "Maryland", "Kansas") ~ "Divided",
+                 
+    State %in% c("Territory") ~ "Territory",
+                 
+    TRUE ~ "Unknown"
+  ))
+
+```
+
+```{r}
+ctcov2$Date<-ymd(ctcov2$Date)
+```
+
+Munging Done!
+
+## Now some ANCOVAs
+
+Deaths\~Govt control and Race
+
+```{r}
+ctcov3<- ctcov2 |>
+         filter(Date == "2021-03-07", Race != "Total",State!="Territory" )
+```
+
+```{r}
+ggplot(ctcov3, #|>
+        # filter(Cases >= quantile(Cases, 0.25,na.rm = TRUE) - 1.5 * IQR(Cases,na.rm = TRUE) & 
+         #       Cases <= quantile(Cases, 0.75,na.rm = TRUE) + 1.5 * IQR(Cases,na.rm = TRUE)),
+       aes(Cases,Deaths, colour = Gov_Control)) +
+  scale_color_manual(values = c(Blue='blue',Red='red',Divided='yellow'))+
+  geom_point()
+```
+
+Should point out that outliers at low cases/high deaths are red states
+
+```{r}
+dcgmod<-lm(Deaths~Cases*Gov_Control,data = ctcov3)
+autoplot(dcgmod)
+```

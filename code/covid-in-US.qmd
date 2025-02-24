@@ -1,0 +1,71 @@
+---
+title: "Covid Tracking Data"
+format: html
+editor: visual
+---
+
+This file will be used to initially analyze a new data set, from Covidtracking.com containing
+
+Setup:
+
+```{r}
+rm(list = ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
+ctcov<-read.csv(here("data","CRDT Data - CRDT.csv"))
+glimpse(ctcov)
+```
+
+fixing some variable types
+
+```{r}
+ctcov$Date<-ymd(ctcov$Date)
+ctcov$State<-as.factor(ctcov$State)
+```
+
+## Some plots to think about
+
+```{r}
+ctmax<-ctcov|>
+  filter(Date=="2021-03-07")
+```
+
+```{r}
+ggplot(ctmax, aes(Cases_Black, Cases_Total))+
+  geom_point()
+```
+
+```{r}
+ggplot(ctmax, aes(Cases_Black,Hosp_Black))+
+  geom_point()
+```
+
+```{r}
+ggplot(ctmax, aes(Cases_Black, Cases_White))+
+  geom_point()
+```
+
+```{r}
+ctmax|>filter(Cases_Black>=50000)|>View()
+```
+
+```{r}
+ggplot(ctmax, aes(Tests_Black, Tests_White))+
+  geom_point()
+```
+
+## A different data set
+
+```{r}
+covcounty<-read.csv(here("data","covid-county-by-race.csv"))
+glimpse(covcounty)
+```
+
+fixing variables:
+
+```{r}
+covcounty$state<-as.factor(covcounty$state)
+covcounty$largestRace1<-as.factor(covcounty$largestRace1)
+covcounty$largestRace2<-as.factor(covcounty$largestRace2)
+```

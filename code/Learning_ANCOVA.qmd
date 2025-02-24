@@ -1,0 +1,72 @@
+---
+title: "Learning_ancova"
+format: html
+editor: visual
+---
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+```
+
+Here, I will explore how to use R to do an ANCOVA (Analysis of Covariance)
+
+First: load the dataset
+
+```{r}
+limp<-read.csv(here("data","limpet.csv"))
+glimpse(limp)
+```
+
+As always, start with a picture to get some initial thoughts
+
+```{r}
+ggplot(limp, aes(DENSITY,EGGS, color=SEASON))+
+  geom_point(size=3)+
+  scale_color_manual(values = c(spring="green",summer="red"))+
+  theme_bw()
+```
+
+So we see maybe a general decline with density here but also more eggs in spring than summer. Our hypothesis might be that the effect of density on eggs depends on the season. The null hypothesis would be that the season has no effect.
+
+Now we need to fit a model. Depending on the relationship we see, we will fit the model differently. Our model will be of the form lm(EGGS\~\[something\],data=limp). Because eggs are the variable of interest (change potentially depending on season or density) we use EGGS as a function of \[something\] where the \[something\] is the variable or combination of variables we suspect the change in eggs to based on. Here we will choose DENSITY\*SEASON.
+
+```{r}
+limpmod<-lm(EGGS~DENSITY*SEASON, data = limp)
+```
+
+Now that we have a model, let's check the assumptions:
+
+```{r}
+autoplot(limpmod, smooth.colour = NA)
+```
+
+These graphs look good. (no big dips or humps, Normal plot stick close to line)
+
+Now lets analyze the model:
+
+```{r}
+anova(limpmod)
+```
+
+Because of our hypothesis, we should look at the third row. We find that it is insignificant, meaning that the density and season have no effect on each other, and that their effects on eggs are simply additive.
+
+Now we could stop, but we'll still get the summary chart to look at anything interesting.
+
+```{r}
+summary(limpmod)
+```
+
+Here we see a restatement of the model function, then residual range and IQR, the the meat of it – the coefficient table.
+
+Breaking this down bottom to top:
+
+-   F-stat and p val: The model has a significant fit
+
+-   Adjusted R\^2: the model explains \~67% of the variation in egg production
+
+-   Residual standard error: as stated, and also 24 data pts - 4 estimated coeffecients = 20 df
+
+-   

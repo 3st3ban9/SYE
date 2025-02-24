@@ -1,0 +1,34 @@
+---
+title: "monthlycovid"
+format: html
+editor: visual
+---
+
+setup:
+
+```{r}
+rm(list=ls())
+library(ggfortify)
+library(here)
+library(tidyverse)
+covmonth<-read.csv(here("data","Monthly_COVID-19_Death_Rates_per_100_000_Population_by_Age_Group__Race_and_Ethnicity__Sex__and_Region_with_Double_Stratification_20250210.csv"))
+```
+
+Fixing some variables:
+
+```{r}
+covmonth$data_as_of<-mdy(covmonth$data_as_of)
+covmonth$jurisdiction_residence<-as.factor(covmonth$jurisdiction_residence)
+covmonth$data_period_start<-mdy(covmonth$data_period_start)
+covmonth$data_period_end<-mdy(covmonth$data_period_end)
+covmonth$group<-as.factor(covmonth$group)
+covmonth$subgroup1<-as.factor(covmonth$subgroup1)
+covmonth$subgroup2<-as.factor(covmonth$subgroup2)
+levels(covmonth$group)
+```
+
+```{r}
+covmonth|>
+  filter(jurisdiction_residence=="United States"&group=="All")|>
+  View()
+```
