@@ -37,14 +37,11 @@ ctcov2 <-ctcov2|>
 ```{r}
 ctcov2 <- ctcov2|>
   mutate(Region = case_when(
-    State %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", "Connecticut", 
-                 "New York", "New Jersey", "Pennsylvania") ~ "Northeast",
-    State == "District of Columbia" ~ "Northeast",  # Assign DC to a region
-    State %in% c("Illinois", "Indiana", "Michigan", "Ohio", "Wisconsin", "Iowa", "Minnesota", 
-                 "Missouri", "North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Midwest",
-    State %in% c("Delaware", "Maryland", "Virginia", "West Virginia", "Kentucky", "North Carolina", 
-                 "South Carolina", "Tennessee", "Georgia", "Florida", "Alabama", "Mississippi", 
-                 "Arkansas", "Louisiana", "Texas", "Oklahoma") ~ "South",
+    State %in% c("Maine", "New Hampshire", "Vermont", "Massachusetts", "Rhode Island", "Connecticut", "New York", "New Jersey", "Pennsylvania") ~ "Northeast",
+    State == "District of Columbia" ~ "Midatlantic",  # Assign DC to a region
+    State %in% c("Illinois", "Indiana", "Michigan", "Ohio", "Wisconsin", "Iowa", "Minnesota", "Missouri", "North Dakota", "South Dakota", "Nebraska", "Kansas") ~ "Midwest",
+    State %in% c("Delaware", "Maryland", "Virginia", "West Virginia", "North Carolina") ~ "Midatlantic",
+    State %in% c("Kentucky", "South Carolina", "Tennessee", "Georgia", "Florida", "Alabama", "Mississippi", "Arkansas", "Louisiana", "Texas", "Oklahoma") ~ "South",
     State %in% c("Montana", "Idaho", "Wyoming", "Colorado", "New Mexico", "Arizona", "Utah", "Nevada") ~ "West",
     State %in% c("Washington", "Oregon", "California", "Alaska", "Hawaii") ~ "Pacific",
     State == "Territory" ~ "Territories of USA",
@@ -81,7 +78,149 @@ ctcov2 <- ctcov2|>
 ctcov2$Date<-ymd(ctcov2$Date)
 ```
 
+```{r}
+library(tidycensus)
+
+# Load 2020 Census state population data
+state_pop_2020 <- get_decennial(
+  geography = "state", 
+  variables = "P1_001N",  # Total population from 2020 Census
+  year = 2020, 
+  sumfile = "pl"
+)
+
+# Rename columns for clarity
+state_pop_2020 <- state_pop_2020 |>
+  rename(State = NAME, Population = value)
+
+# View the first few rows of the dataset
+head(state_pop_2020)
+ctcov2 <- ctcov2 %>%
+  left_join(state_pop_2020, by = "State")  # Merging by State column
+
+```
+
 Munging Done!
+
+## Now some ANOVAs
+
+### Deaths vs Government Control
+
+```{r}
+ggplot(ctcov2,aes(Gov_Control,Deaths/Population))+
+  geom_boxplot()
+```
+
+```{r}
+mean_deaths <- mean(ctcov2$Deaths, na.rm = TRUE)
+var_deaths <- var(ctcov2$Deaths, na.rm = TRUE)
+
+print(paste("Mean:", mean_deaths, "Variance:", var_deaths))
+```
+
+```{r}
+library(MASS)
+ctcov2<-ctcov2|>filter(Deaths >= 0)
+dgcmod <- glm.nb(Deaths/Population ~ Gov_Control, data = ctcov2)
+#dgcmod<-lm(Deaths~Gov_Control,data = ctcov2)#,family = poisson)
+autoplot(dgcmod)
+```
+
+Really bad model, let's fix outliers and just use the last date
+
+```{r}
+ctcov3<- ctcov2 |>
+         filter(Date == "2021-03-07", Race != "Total",State!="Territory" )
+outliers <- abs(ctcov3$Deaths) > 3 * sd(ctcov3$Deaths)
+sum(outliers)
+ctcov3no<- ctcov3[!outliers, ]
+dgcmod<- glm.nb(Deaths/Population ~ Gov_Control, data = ctcov3no)
+autoplot(dgcmod)
+```
+
+Better model but still bad, let's go with it for now
+
+```{r}
+anova(dgcmod)
+summary(dgcmod)
+```
+
+There is not enough evidence to reject the null hypothesis, meaning that we cannot say government control affects the death rate by state. Perhaps when we figure out how to get better models, we will find one to fit better. Perhaps there was a bigger influence on the entire country at the time.
+
+### Deaths vs Race
+
+Plot it first
+
+```{r}
+ctcov3no2<-ctcov3no|>filter(Deaths/Cases<0.25&Race!="EHispanic"&Race!="ENonHispanic"&Race!="EUnknown")
+ggplot(ctcov3no2, aes(Race,Deaths/Cases))+
+  geom_boxplot()
+```
+
+```{r}
+dcrmod<-glm(Deaths/Cases~Race, data = ctcov3no2,family=quasipoisson)
+autoplot(dcrmod)
+```
+
+Good assumptions, but qq plot is weird
+
+```{r}
+anova(dcrmod)
+summary(dcrmod)
+```
+
+Tukey
+
+```{r}
+library(emmeans)
+library("multcomp")
+library("multcompView")
+tukey<-emmeans(dcrmod, pairwise ~ Race, adjust = "tukey")
+emm <- tukey$emmeans
+cldres <- as.data.frame(cld(emm))
+print(cldres)
+```
+
+There is enough evidence to reject the null hypothesis that race has no effect on the deaths per cases ratio.
+
+### Hospitalizations vs Gov Control
+
+plot it
+
+```{r}
+ggplot(ctcov3no2,aes(Gov_Control,Hosp))+
+  geom_boxplot()
+```
+
+model
+
+```{r}
+hgcmod<-glm(Hosp~Gov_Control,data =ctcov3no2,family=poisson)
+autoplot(hgcmod)
+```
+
+Worry about q-q plot later
+
+```{r}
+anova(hgcmod)
+summary(hgcmod)
+```
+
+```{r}
+tukey2<-emmeans(hgcmod, pairwise ~ Gov_Control, adjust = "tukey")
+emm2 <- tukey2$emmeans
+cldres2 <- as.data.frame(cld(emm2))
+print(cldres2)
+```
+
+There is enough evidence to reject the null hypothesis that gov control does not affect hospitalizations.
+
+Testing:
+
+```{r}
+write.csv(ctcov2,file = "new_CRDT.csv")
+
+```
 
 ## Now some ANCOVAs
 
@@ -99,6 +238,16 @@ ggplot(ctcov3, #|>
        aes(Cases,Deaths, colour = Gov_Control)) +
   scale_color_manual(values = c(Blue='blue',Red='red',Divided='yellow'))+
   geom_point()
+```
+
+What are those weird points on the left and right?
+
+```{r}
+filter(ctcov3, Deaths>15000&Cases<250000)
+```
+
+```{r}
+filter(ctcov3, Deaths<5000&Cases>2500000)
 ```
 
 Should point out that outliers at low cases/high deaths are red states
