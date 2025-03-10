@@ -112,6 +112,12 @@ ggplot(ctcov2,aes(Gov_Control,Deaths/Population))+
 ```
 
 ```{r}
+#ggplot(ctcov3no,aes(Deaths))+
+ # geom_histogram()
+  #facet_wrap(~Gov_Control,ncol=1)
+```
+
+```{r}
 mean_deaths <- mean(ctcov2$Deaths, na.rm = TRUE)
 var_deaths <- var(ctcov2$Deaths, na.rm = TRUE)
 
@@ -215,16 +221,9 @@ print(cldres2)
 
 There is enough evidence to reject the null hypothesis that gov control does not affect hospitalizations.
 
-Testing:
-
-```{r}
-write.csv(ctcov2,file = "new_CRDT.csv")
-
-```
-
 ## Now some ANCOVAs
 
-Deaths\~Govt control and Race
+Deaths\~Govt control and Cases two way anova
 
 ```{r}
 ctcov3<- ctcov2 |>
@@ -255,4 +254,10 @@ Should point out that outliers at low cases/high deaths are red states
 ```{r}
 dcgmod<-lm(Deaths~Cases*Gov_Control,data = ctcov3)
 autoplot(dcgmod)
+```
+
+# New csv
+
+```{r}
+#write.csv(ctcov2, file = "first_merged_CRDT.csv")
 ```

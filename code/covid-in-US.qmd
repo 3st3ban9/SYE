@@ -22,6 +22,7 @@ fixing some variable types
 ```{r}
 ctcov$Date<-ymd(ctcov$Date)
 ctcov$State<-as.factor(ctcov$State)
+ctcov|>group_by(Date,State)
 ```
 
 ## Some plots to think about

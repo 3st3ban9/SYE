@@ -1,0 +1,93 @@
+---
+title: "Playing with first merged crdt"
+format: html
+editor: visual
+---
+
+# Setting up
+
+```{r}
+rm(list=ls())
+library(tidyverse)
+library(here)
+library(ggfortify)
+library(MASS)
+mergecov<-read.csv(here("data","first_merged_CRDT.csv"))
+mergecov$Date<-ymd(mergecov$Date)
+mergecov$Race<-as.factor(mergecov$Race)
+mergecov$State<-as.factor(mergecov$State)
+mergecov$Region<-as.factor(mergecov$Region)
+mergecov$Gov_Control<-as.factor(mergecov$Gov_Control)
+mergecov<-mergecov|>dplyr::select(c(2,3,4,5,6,7,8,9,10,13))
+glimpse(mergecov)
+```
+
+## Definitions of Variables 
+
+Data set created by Covidtracking.com
+
+-   Date\~
+
+-   State\~
+
+-   Race: race of people referred to by entry \~ "Total" refers to all groups
+
+-   Cases: confirmed plus probable cases \~ person who positive test for covid, had a positive antigen test, had clinical and epidemiological evidence of covid, or had covid listed on death certificate
+
+-   Deaths: deaths of people confirmed with or probable to have had covid \~ typically having covid on death certificate
+
+-   Hosp: people who have ever been hospitalized with covid
+
+-   Tests: estimate of PCR tests given
+
+-   Region: states were divided into 7 geographical regions
+
+-   Population: population of state provided by the "tidycensus" package
+
+# Guiding Questions
+
+## Overarching
+
+-   How is any individual affected differently by a pandemic disease, like COVID-19, based on their personal identities, mainly race?
+
+## General
+
+-   What is the sociological intersection like between COVID deaths, state government jurisdiction, and race? How is the number of deaths affected buy these factors?
+
+-   Does geographic region affect the number of cases? Perhaps due to environmental implications
+
+-   Are people of certain races accessing medical care (tests and hospitals) differently? Could this answer be related to governmental jurisdictions in their state?
+
+# Stats
+
+## Getting the Data We Need
+
+First, I'll just grab the totals
+
+```{r}
+covtotals<-mergecov|>filter(Race=="Total",State!="Territory")#Territory data is too sparse to consider
+```
+
+Next, I'll grab the most recent date
+
+```{r}
+covtotalslast<-covtotals|>filter(Date=="2021-03-07")
+```
+
+Now let's look at the distribution of death counts. To make it easier to read, let's look specifically at the death rate per 10,000 people
+
+```{r}
+ggplot(covtotalslast,aes(10000*Deaths/Population))+
+  geom_histogram()
+```
+
+The data seem fairly normal, with maybe a slight leftward skew. It might be centered around \~15 deaths per 10,000 people with few to no outliers.
+
+## A Simple Model
+
+Let's start with a simpler model: Deaths as a function of Government Control
+
+```{r}
+deathgovmod<-glm.nb(Deaths~Gov_Control,data = covtotalslast)
+autoplot(deathgovmod)
+```
