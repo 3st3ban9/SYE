@@ -35,7 +35,15 @@ Now we need to fit a model. Depending on the relationship we see, we will fit th
 
 ```{r}
 limpmod<-lm(EGGS~DENSITY*SEASON, data = limp)
+
+
 ```
+
+Density\**Season -\> Density + Season +interaction between Density and* Season
+
+Density:Season -\> interaction between Density and Season ONLY
+
+lm(y \~.) -\> this means you are fitting Y on all the rest of variables with only main effect
 
 Now that we have a model, let's check the assumptions:
 

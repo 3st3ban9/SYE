@@ -164,7 +164,7 @@ ggplot(ctcov3no2, aes(Race,Deaths/Cases))+
 ```
 
 ```{r}
-dcrmod<-glm(Deaths/Cases~Race, data = ctcov3no2,family=quasipoisson)
+dcrmod<-glm(Deaths~Race, data = ctcov3no2,family=quasipoisson)
 autoplot(dcrmod)
 ```
 
