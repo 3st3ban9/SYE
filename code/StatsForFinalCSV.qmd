@@ -1,0 +1,31 @@
+---
+title: "First Stats with Final .csv"
+format: html
+editor: visual
+---
+
+# Setup
+
+```{r}
+rm(list = ls())
+library(here)
+library(tidyverse)
+library(ggfortify)
+library(MASS)
+covid<-read.csv(here("data","CovidbyRaceandState.csv"))
+covid<-covid|>dplyr::select(c(2:11))
+glimpse(covid)
+```
+
+fixing data types
+
+```{r}
+covid$Date<-ymd(covid$Date)
+covid$State<-as.factor(covid$State)
+covid$Race<-as.factor(covid$Race)
+covid$Region<-as.factor(covid$Region)
+covid$Gov_Control<-as.factor(covid$Gov_Control)
+glimpse(covid)
+```
+
+# Stats
