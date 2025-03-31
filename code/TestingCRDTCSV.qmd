@@ -80,7 +80,6 @@ ctcov2$Date<-ymd(ctcov2$Date)
 
 ```{r}
 library(tidycensus)
-
 # Load 2020 Census state population data
 state_pop_2020 <- get_decennial(
   geography = "state", 
@@ -100,164 +99,93 @@ ctcov2 <- ctcov2 %>%
 
 ```
 
-Munging Done!
-
-## Now some ANOVAs
-
-### Deaths vs Government Control
+race populations
 
 ```{r}
-ggplot(ctcov2,aes(Gov_Control,Deaths/Population))+
-  geom_boxplot()
+ctcov2$Race<-as.factor(ctcov2$Race)
+levels(ctcov2$Race)
 ```
 
 ```{r}
-#ggplot(ctcov3no,aes(Deaths))+
- # geom_histogram()
-  #facet_wrap(~Gov_Control,ncol=1)
+# Set your API key if not already set
+#census_api_key("APIkey", install = TRUE)
+
+# Define racial variables from ACS 5-year estimates
+race_vars <- c(
+  White = "B02001_002",
+  Black = "B02001_003",
+  AIAN = "B02001_004",
+  Asian = "B02001_005",
+  NHPI = "B02001_006",
+  Other = "B02001_007",
+  Multiracial = "B02001_008"
+)
+
+# Get ACS racial data for states
+state_race_data <- get_acs(
+  geography = "state",
+  variables = race_vars,
+  year = 2022,
+  survey = "acs5"
+) %>%
+  select(NAME, variable, estimate) %>%
+  pivot_wider(names_from = variable, values_from = estimate)
+# Convert state_race_data to long format
+state_race_long <- state_race_data %>%
+  pivot_longer(
+    cols = -NAME,  # Keep the state name column
+    names_to = "Race", 
+    values_to = "population by race"
+  )
+
+ctcov2merged <- ctcov2 %>%
+  left_join(state_race_long, by = c("State" = "NAME", "Race"))
+
+
+```
+
+
+```{r}
+ctcov2merged<-ctcov2merged|>filter(Deaths >= 0)
+```
+
+
+```{r}
+ctcov3<- ctcov2merged |>
+         filter(Date == "2021-03-07",
+                Race!="EHispanic"&
+                  Race!="ENonHispanic"&
+                  Race!="EUnknown"&
+                  Race!="Unknown"&
+                  Race!="Latinx",
+                State!="Territory" )
+# Fill "Total" race category with state total population
+ctcov3 <- ctcov3 %>%
+  mutate(`population by race` = ifelse(Race == "Total", Population, `population by race`)) %>%
+  select(-Population)  # Remove redundant total population column
 ```
 
 ```{r}
-mean_deaths <- mean(ctcov2$Deaths, na.rm = TRUE)
-var_deaths <- var(ctcov2$Deaths, na.rm = TRUE)
-
-print(paste("Mean:", mean_deaths, "Variance:", var_deaths))
+covwithraces<-ctcov3|>
+  select(c(1,2,3,4,5,6,7,8,9,12))
+glimpse(covwithraces)
 ```
-
+Fixing data types
 ```{r}
-library(MASS)
-ctcov2<-ctcov2|>filter(Deaths >= 0)
-dgcmod <- glm.nb(Deaths/Population ~ Gov_Control, data = ctcov2)
-#dgcmod<-lm(Deaths~Gov_Control,data = ctcov2)#,family = poisson)
-autoplot(dgcmod)
-```
-
-Really bad model, let's fix outliers and just use the last date
-
-```{r}
-ctcov3<- ctcov2 |>
-         filter(Date == "2021-03-07", Race != "Total",State!="Territory" )
-outliers <- abs(ctcov3$Deaths) > 3 * sd(ctcov3$Deaths)
-sum(outliers)
-ctcov3no<- ctcov3[!outliers, ]
-dgcmod<- glm.nb(Deaths/Population ~ Gov_Control, data = ctcov3no)
-autoplot(dgcmod)
-```
-
-Better model but still bad, let's go with it for now
-
-```{r}
-anova(dgcmod)
-summary(dgcmod)
-```
-
-There is not enough evidence to reject the null hypothesis, meaning that we cannot say government control affects the death rate by state. Perhaps when we figure out how to get better models, we will find one to fit better. Perhaps there was a bigger influence on the entire country at the time.
-
-### Deaths vs Race
-
-Plot it first
-
-```{r}
-ctcov3no2<-ctcov3no|>filter(Deaths/Cases<0.25&Race!="EHispanic"&Race!="ENonHispanic"&Race!="EUnknown")
-ggplot(ctcov3no2, aes(Race,Deaths/Cases))+
-  geom_boxplot()
-```
-
-```{r}
-dcrmod<-glm(Deaths~Race, data = ctcov3no2,family=quasipoisson)
-autoplot(dcrmod)
-```
-
-Good assumptions, but qq plot is weird
-
-```{r}
-anova(dcrmod)
-summary(dcrmod)
-```
-
-Tukey
-
-```{r}
-library(emmeans)
-library("multcomp")
-library("multcompView")
-tukey<-emmeans(dcrmod, pairwise ~ Race, adjust = "tukey")
-emm <- tukey$emmeans
-cldres <- as.data.frame(cld(emm))
-print(cldres)
-```
-
-There is enough evidence to reject the null hypothesis that race has no effect on the deaths per cases ratio.
-
-### Hospitalizations vs Gov Control
-
-plot it
-
-```{r}
-ggplot(ctcov3no2,aes(Gov_Control,Hosp))+
-  geom_boxplot()
-```
-
-model
-
-```{r}
-hgcmod<-glm(Hosp~Gov_Control,data =ctcov3no2,family=poisson)
-autoplot(hgcmod)
-```
-
-Worry about q-q plot later
-
-```{r}
-anova(hgcmod)
-summary(hgcmod)
-```
-
-```{r}
-tukey2<-emmeans(hgcmod, pairwise ~ Gov_Control, adjust = "tukey")
-emm2 <- tukey2$emmeans
-cldres2 <- as.data.frame(cld(emm2))
-print(cldres2)
-```
-
-There is enough evidence to reject the null hypothesis that gov control does not affect hospitalizations.
-
-## Now some ANCOVAs
-
-Deaths\~Govt control and Cases two way anova
-
-```{r}
-ctcov3<- ctcov2 |>
-         filter(Date == "2021-03-07", Race != "Total",State!="Territory" )
-```
-
-```{r}
-ggplot(ctcov3, #|>
-        # filter(Cases >= quantile(Cases, 0.25,na.rm = TRUE) - 1.5 * IQR(Cases,na.rm = TRUE) & 
-         #       Cases <= quantile(Cases, 0.75,na.rm = TRUE) + 1.5 * IQR(Cases,na.rm = TRUE)),
-       aes(Cases,Deaths, colour = Gov_Control)) +
-  scale_color_manual(values = c(Blue='blue',Red='red',Divided='yellow'))+
-  geom_point()
-```
-
-What are those weird points on the left and right?
-
-```{r}
-filter(ctcov3, Deaths>15000&Cases<250000)
-```
-
-```{r}
-filter(ctcov3, Deaths<5000&Cases>2500000)
-```
-
-Should point out that outliers at low cases/high deaths are red states
-
-```{r}
-dcgmod<-lm(Deaths~Cases*Gov_Control,data = ctcov3)
-autoplot(dcgmod)
+covwithraces<-covwithraces|>
+  rename('Population_By_Race'='population by race')
+covwithraces$Date<-ymd(covwithraces$Date)
+covwithraces$State<-as.factor(covwithraces$State)
+covwithraces$Race<-as.factor(covwithraces$Race)
+covwithraces$Region<-as.factor(covwithraces$Region)
+covwithraces$Gov_Control<-as.factor(covwithraces$Gov_Control)
+glimpse(covwithraces)
 ```
 
 # New csv
 
 ```{r}
 #write.csv(ctcov2, file = "first_merged_CRDT.csv")
+#write.csv(covwithraces, file = "CovidbyRaceandState.csv")
+
 ```

@@ -1,0 +1,409 @@
+"","Date","State","Race","Cases","Deaths","Hosp","Tests","Region","Gov_Control","Population_By_Race"
+"1",2021-03-07,"Alaska","Total",59332,305,1293,NA,"Pacific","Red",733391
+"2",2021-03-07,"Alaska","White",18300,127,423,NA,"Pacific","Red",450472
+"3",2021-03-07,"Alaska","Black",1499,9,45,NA,"Pacific","Red",23395
+"4",2021-03-07,"Alaska","Asian",2447,29,116,NA,"Pacific","Red",47464
+"5",2021-03-07,"Alaska","AIAN",12238,111,336,NA,"Pacific","Red",104957
+"6",2021-03-07,"Alaska","NHPI",1508,17,126,NA,"Pacific","Red",11209
+"7",2021-03-07,"Alaska","Multiracial",4453,4,67,NA,"Pacific","Red",82727
+"8",2021-03-07,"Alaska","Other",7130,1,54,NA,"Pacific","Red",14597
+"9",2021-03-07,"Alabama","Total",499819,10148,NA,NA,"South","Red",5024279
+"10",2021-03-07,"Alabama","White",160347,4730,NA,NA,"South","Red",3329012
+"11",2021-03-07,"Alabama","Black",82790,2223,NA,NA,"South","Red",1326341
+"12",2021-03-07,"Alabama","Asian",2273,24,NA,NA,"South","Red",69808
+"13",2021-03-07,"Alabama","AIAN",NA,NA,NA,NA,"South","Red",21122
+"14",2021-03-07,"Alabama","NHPI",NA,NA,NA,NA,"South","Red",2253
+"15",2021-03-07,"Alabama","Multiracial",NA,NA,NA,NA,"South","Red",185632
+"16",2021-03-07,"Alabama","Other",38000,300,NA,NA,"South","Red",93924
+"17",2021-03-07,"Arkansas","Total",324818,5319,NA,NA,"South","Red",3011524
+"18",2021-03-07,"Arkansas","White",207596,4171,NA,NA,"South","Red",2193348
+"19",2021-03-07,"Arkansas","Black",50842,784,NA,NA,"South","Red",456693
+"20",2021-03-07,"Arkansas","Asian",2913,36,NA,NA,"South","Red",47413
+"21",2021-03-07,"Arkansas","AIAN",1070,18,NA,NA,"South","Red",16840
+"22",2021-03-07,"Arkansas","NHPI",3358,56,NA,NA,"South","Red",11117
+"23",2021-03-07,"Arkansas","Multiracial",1804,13,NA,NA,"South","Red",203476
+"24",2021-03-07,"Arkansas","Other",16491,203,NA,NA,"South","Red",89782
+"25",2021-03-07,"Arizona","Total",826454,16328,57907,NA,"West","Divided",7151502
+"26",2021-03-07,"Arizona","White",308453,8066,26710,NA,"West","Divided",4781702
+"27",2021-03-07,"Arizona","Black",25775,433,2479,NA,"West","Divided",327077
+"28",2021-03-07,"Arizona","Asian",11921,220,1015,NA,"West","Divided",240642
+"29",2021-03-07,"Arizona","AIAN",40707,1361,4496,NA,"West","Divided",297590
+"30",2021-03-07,"Arizona","NHPI",NA,NA,NA,NA,"West","Divided",14116
+"31",2021-03-07,"Arizona","Multiracial",NA,NA,NA,NA,"West","Divided",961794
+"32",2021-03-07,"Arizona","Other",46964,465,2562,NA,"West","Divided",549361
+"33",2021-03-07,"California","Total",3501394,54124,NA,49646014,"Pacific","Blue",39538223
+"34",2021-03-07,"California","White",546630,16586,NA,9172498,"Pacific","Blue",18943660
+"35",2021-03-07,"California","Black",111279,3275,NA,1730660,"Pacific","Blue",2202587
+"36",2021-03-07,"California","Asian",186562,6105,NA,3980518,"Pacific","Blue",5949136
+"37",2021-03-07,"California","AIAN",9025,184,NA,98894,"Pacific","Blue",394188
+"38",2021-03-07,"California","NHPI",15281,322,NA,222513,"Pacific","Blue",150531
+"39",2021-03-07,"California","Multiracial",42824,693,NA,74171,"Pacific","Blue",5327003
+"40",2021-03-07,"California","Other",304477,1103,NA,6354689,"Pacific","Blue",6388999
+"41",2021-03-07,"Colorado","Total",435762,5986,NA,NA,"West","Blue",5773714
+"42",2021-03-07,"Colorado","White",181669,3869,NA,NA,"West","Blue",4393409
+"43",2021-03-07,"Colorado","Black",12637,191,NA,NA,"West","Blue",233712
+"44",2021-03-07,"Colorado","Asian",6406,115,NA,NA,"West","Blue",185431
+"45",2021-03-07,"Colorado","AIAN",2527,37,NA,NA,"West","Blue",57022
+"46",2021-03-07,"Colorado","NHPI",1264,9,NA,NA,"West","Blue",8094
+"47",2021-03-07,"Colorado","Multiracial",6580,186,NA,NA,"West","Blue",609976
+"48",2021-03-07,"Colorado","Other",3312,38,NA,NA,"West","Blue",283146
+"49",2021-03-07,"Connecticut","Total",285330,7704,NA,NA,"Northeast","Blue",3605944
+"50",2021-03-07,"Connecticut","White",85469,5413,NA,NA,"Northeast","Blue",2522166
+"51",2021-03-07,"Connecticut","Black",19651,906,NA,NA,"Northeast","Blue",385407
+"52",2021-03-07,"Connecticut","Asian",3019,83,NA,NA,"Northeast","Blue",170945
+"53",2021-03-07,"Connecticut","AIAN",393,3,NA,NA,"Northeast","Blue",9043
+"54",2021-03-07,"Connecticut","NHPI",NA,NA,NA,NA,"Northeast","Blue",1345
+"55",2021-03-07,"Connecticut","Multiracial",17642,353,NA,NA,"Northeast","Blue",288485
+"56",2021-03-07,"Connecticut","Other",15284,38,NA,NA,"Northeast","Blue",233926
+"57",2021-03-07,"District of Columbia","Total",41419,1030,NA,NA,"Midatlantic","Blue",689545
+"58",2021-03-07,"District of Columbia","White",10708,105,NA,NA,"Midatlantic","Blue",265633
+"59",2021-03-07,"District of Columbia","Black",20164,773,NA,NA,"Midatlantic","Blue",297101
+"60",2021-03-07,"District of Columbia","Asian",914,14,NA,NA,"Midatlantic","Blue",27067
+"61",2021-03-07,"District of Columbia","AIAN",86,NA,NA,NA,"Midatlantic","Blue",2209
+"62",2021-03-07,"District of Columbia","NHPI",82,NA,NA,NA,"Midatlantic","Blue",420
+"63",2021-03-07,"District of Columbia","Multiracial",NA,NA,NA,NA,"Midatlantic","Blue",47278
+"64",2021-03-07,"District of Columbia","Other",9148,0,NA,NA,"Midatlantic","Blue",30879
+"65",2021-03-07,"Delaware","Total",88354,1473,NA,633424,"Midatlantic","Blue",989948
+"66",2021-03-07,"Delaware","White",42730,1036,NA,311489,"Midatlantic","Blue",634244
+"67",2021-03-07,"Delaware","Black",19768,329,NA,118013,"Midatlantic","Blue",218266
+"68",2021-03-07,"Delaware","Asian",1842,11,NA,16091,"Midatlantic","Blue",40570
+"69",2021-03-07,"Delaware","AIAN",NA,NA,NA,NA,"Midatlantic","Blue",3309
+"70",2021-03-07,"Delaware","NHPI",NA,NA,NA,NA,"Midatlantic","Blue",365
+"71",2021-03-07,"Delaware","Multiracial",NA,NA,NA,NA,"Midatlantic","Blue",64130
+"72",2021-03-07,"Delaware","Other",5190,15,NA,58282,"Midatlantic","Blue",32751
+"73",2021-03-07,"Florida","Total",1944995,32266,82237,NA,"South","Red",21538187
+"74",2021-03-07,"Florida","White",664121,17316,38131,NA,"South","Red",13807410
+"75",2021-03-07,"Florida","Black",237772,4812,16138,NA,"South","Red",3355708
+"76",2021-03-07,"Florida","Asian",NA,NA,NA,NA,"South","Red",609990
+"77",2021-03-07,"Florida","AIAN",NA,NA,NA,NA,"South","Red",59197
+"78",2021-03-07,"Florida","NHPI",NA,NA,NA,NA,"South","Red",13200
+"79",2021-03-07,"Florida","Multiracial",NA,NA,NA,NA,"South","Red",2743467
+"80",2021-03-07,"Florida","Other",141809,1427,4284,NA,"South","Red",1045557
+"81",2021-03-07,"Georgia","Total",1023487,17906,56797,NA,"South","Red",10711908
+"82",2021-03-07,"Georgia","White",319208,8939,24335,NA,"South","Red",5820019
+"83",2021-03-07,"Georgia","Black",216068,5282,22046,NA,"South","Red",3373948
+"84",2021-03-07,"Georgia","Asian",17888,298,1029,NA,"South","Red",465487
+"85",2021-03-07,"Georgia","AIAN",504,10,20,NA,"South","Red",37920
+"86",2021-03-07,"Georgia","NHPI",746,10,69,NA,"South","Red",7411
+"87",2021-03-07,"Georgia","Multiracial",NA,NA,NA,NA,"South","Red",638881
+"88",2021-03-07,"Georgia","Other",36133,78,1076,NA,"South","Red",378659
+"89",2021-03-07,"Hawaii","Total",27891,445,2226,NA,"Pacific","Blue",1455271
+"90",2021-03-07,"Hawaii","White",3646,40,151,NA,"Pacific","Blue",333296
+"91",2021-03-07,"Hawaii","Black",580,4,15,NA,"Pacific","Blue",28665
+"92",2021-03-07,"Hawaii","Asian",6068,244,521,NA,"Pacific","Blue",538970
+"93",2021-03-07,"Hawaii","AIAN",NA,NA,NA,NA,"Pacific","Blue",4210
+"94",2021-03-07,"Hawaii","NHPI",8008,137,660,NA,"Pacific","Blue",150797
+"95",2021-03-07,"Hawaii","Multiracial",NA,NA,NA,NA,"Pacific","Blue",370148
+"96",2021-03-07,"Hawaii","Other",1035,6,38,NA,"Pacific","Blue",24503
+"97",2021-03-07,"Iowa","Total",339671,5558,NA,NA,"Midwest","Red",3190369
+"98",2021-03-07,"Iowa","White",200406,5154,NA,NA,"Midwest","Red",2769619
+"99",2021-03-07,"Iowa","Black",10190,134,NA,NA,"Midwest","Red",120619
+"100",2021-03-07,"Iowa","Asian",3397,61,NA,NA,"Midwest","Red",78940
+"101",2021-03-07,"Iowa","AIAN",888,19,NA,NA,"Midwest","Red",10111
+"102",2021-03-07,"Iowa","NHPI",824,16,NA,NA,"Midwest","Red",4582
+"103",2021-03-07,"Iowa","Multiracial",NA,NA,NA,NA,"Midwest","Red",150396
+"104",2021-03-07,"Iowa","Other",2379,47,NA,NA,"Midwest","Red",54569
+"105",2021-03-07,"Idaho","Total",172931,1879,NA,NA,"West","Red",1839106
+"106",2021-03-07,"Idaho","White",99914,1761,NA,NA,"West","Red",1574859
+"107",2021-03-07,"Idaho","Black",1008,9,NA,NA,"West","Red",12781
+"108",2021-03-07,"Idaho","Asian",1219,17,NA,NA,"West","Red",24987
+"109",2021-03-07,"Idaho","AIAN",2054,35,NA,NA,"West","Red",22297
+"110",2021-03-07,"Idaho","NHPI",409,NA,NA,NA,"West","Red",2721
+"111",2021-03-07,"Idaho","Multiracial",NA,NA,NA,NA,"West","Red",132577
+"112",2021-03-07,"Idaho","Other",13191,41,NA,NA,"West","Red",83887
+"113",2021-03-07,"Illinois","Total",1198335,23014,NA,18640190,"Midwest","Blue",12812508
+"114",2021-03-07,"Illinois","White",470333,12202,NA,6066122,"Midwest","Blue",8388659
+"115",2021-03-07,"Illinois","Black",110701,3668,NA,1362411,"Midwest","Blue",1774605
+"116",2021-03-07,"Illinois","Asian",27074,737,NA,720684,"Midwest","Blue",738071
+"117",2021-03-07,"Illinois","AIAN",1492,26,NA,15305,"Midwest","Blue",55819
+"118",2021-03-07,"Illinois","NHPI",1125,20,NA,18976,"Midwest","Blue",5476
+"119",2021-03-07,"Illinois","Multiracial",NA,NA,NA,NA,"Midwest","Blue",952451
+"120",2021-03-07,"Illinois","Other",41054,120,NA,534214,"Midwest","Blue",842553
+"121",2021-03-07,"Indiana","Total",667262,12737,NA,3150418,"Midwest","Red",6785528
+"122",2021-03-07,"Indiana","White",452265,9096,NA,2172766,"Midwest","Red",5426227
+"123",2021-03-07,"Indiana","Black",44471,939,NA,239719,"Midwest","Red",640752
+"124",2021-03-07,"Indiana","Asian",8987,70,NA,59652,"Midwest","Red",168899
+"125",2021-03-07,"Indiana","AIAN",NA,NA,NA,NA,"Midwest","Red",12465
+"126",2021-03-07,"Indiana","NHPI",NA,NA,NA,NA,"Midwest","Red",2490
+"127",2021-03-07,"Indiana","Multiracial",NA,NA,NA,NA,"Midwest","Red",345830
+"128",2021-03-07,"Indiana","Other",72744,1591,NA,381330,"Midwest","Red",187740
+"129",2021-03-07,"Kansas","Total",295861,4812,9387,1270547,"Midwest","Divided",2937880
+"130",2021-03-07,"Kansas","White",209752,3721,7118,806291,"Midwest","Divided",2341473
+"131",2021-03-07,"Kansas","Black",14330,235,752,61246,"Midwest","Divided",163581
+"132",2021-03-07,"Kansas","Asian",5525,64,173,24634,"Midwest","Divided",88513
+"133",2021-03-07,"Kansas","AIAN",2074,38,67,8140,"Midwest","Divided",22015
+"134",2021-03-07,"Kansas","NHPI",NA,NA,NA,NA,"Midwest","Divided",2729
+"135",2021-03-07,"Kansas","Multiracial",NA,NA,NA,NA,"Midwest","Divided",215150
+"136",2021-03-07,"Kansas","Other",12197,245,623,45244,"Midwest","Divided",102461
+"137",2021-03-07,"Kentucky","Total",410709,4819,NA,NA,"South","Divided",4505836
+"138",2021-03-07,"Kentucky","White",286431,3981,NA,NA,"South","Divided",3816997
+"139",2021-03-07,"Kentucky","Black",26883,371,NA,NA,"South","Divided",360184
+"140",2021-03-07,"Kentucky","Asian",3680,23,NA,NA,"South","Divided",69187
+"141",2021-03-07,"Kentucky","AIAN",833,4,NA,NA,"South","Divided",6821
+"142",2021-03-07,"Kentucky","NHPI",374,2,NA,NA,"South","Divided",3805
+"143",2021-03-07,"Kentucky","Multiracial",16253,118,NA,NA,"South","Divided",189589
+"144",2021-03-07,"Kentucky","Other",NA,NA,NA,NA,"South","Divided",56352
+"145",2021-03-07,"Louisiana","Total",433785,9748,NA,NA,"South","Divided",4657757
+"146",2021-03-07,"Louisiana","White",218332,5798,NA,NA,"South","Divided",2758714
+"147",2021-03-07,"Louisiana","Black",136460,3723,NA,NA,"South","Divided",1464582
+"148",2021-03-07,"Louisiana","Asian",16684,75,NA,NA,"South","Divided",80363
+"149",2021-03-07,"Louisiana","AIAN",1527,15,NA,NA,"South","Divided",24952
+"150",2021-03-07,"Louisiana","NHPI",492,13,NA,NA,"South","Divided",2361
+"151",2021-03-07,"Louisiana","Multiracial",NA,NA,NA,NA,"South","Divided",225187
+"152",2021-03-07,"Louisiana","Other",34552,39,NA,NA,"South","Divided",84387
+"153",2021-03-07,"Massachusetts","Total",591356,16417,19713,NA,"Northeast","Blue",7029917
+"154",2021-03-07,"Massachusetts","White",219467,12022,10414,NA,"Northeast","Blue",5075525
+"155",2021-03-07,"Massachusetts","Black",35342,1069,1900,NA,"Northeast","Blue",498785
+"156",2021-03-07,"Massachusetts","Asian",16039,414,709,NA,"Northeast","Blue",487600
+"157",2021-03-07,"Massachusetts","AIAN",504,11,10,NA,"Northeast","Blue",14740
+"158",2021-03-07,"Massachusetts","NHPI",156,5,7,NA,"Northeast","Blue",2766
+"159",2021-03-07,"Massachusetts","Multiracial",NA,NA,NA,NA,"Northeast","Blue",557288
+"160",2021-03-07,"Massachusetts","Other",47605,1373,1957,NA,"Northeast","Blue",347501
+"161",2021-03-07,"Maryland","Total",387319,7955,NA,NA,"Midatlantic","Divided",6177224
+"162",2021-03-07,"Maryland","White",134697,4078,NA,NA,"Midatlantic","Divided",3154247
+"163",2021-03-07,"Maryland","Black",112033,2736,NA,NA,"Midatlantic","Divided",1841926
+"164",2021-03-07,"Maryland","Asian",8867,277,NA,NA,"Midatlantic","Divided",399736
+"165",2021-03-07,"Maryland","AIAN",NA,NA,NA,NA,"Midatlantic","Divided",18343
+"166",2021-03-07,"Maryland","NHPI",NA,NA,NA,NA,"Midatlantic","Divided",3120
+"167",2021-03-07,"Maryland","Multiracial",NA,NA,NA,NA,"Midatlantic","Divided",388933
+"168",2021-03-07,"Maryland","Other",18321,80,NA,NA,"Midatlantic","Divided",355402
+"169",2021-03-07,"Maine","Total",45794,706,1570,NA,"Northeast","Blue",1362359
+"170",2021-03-07,"Maine","White",36271,602,1359,NA,"Northeast","Blue",1261284
+"171",2021-03-07,"Maine","Black",2252,10,63,NA,"Northeast","Blue",21775
+"172",2021-03-07,"Maine","Asian",502,3,22,NA,"Northeast","Blue",15071
+"173",2021-03-07,"Maine","AIAN",139,5,7,NA,"Northeast","Blue",6722
+"174",2021-03-07,"Maine","NHPI",26,0,0,NA,"Northeast","Blue",265
+"175",2021-03-07,"Maine","Multiracial",178,1,3,NA,"Northeast","Blue",53704
+"176",2021-03-07,"Maine","Other",907,6,30,NA,"Northeast","Blue",8128
+"177",2021-03-07,"Michigan","Total",656072,16658,NA,NA,"Midwest","Divided",10077331
+"178",2021-03-07,"Michigan","White",378135,11205,NA,NA,"Midwest","Divided",7617085
+"179",2021-03-07,"Michigan","Black",74321,3634,NA,NA,"Midwest","Divided",1363539
+"180",2021-03-07,"Michigan","Asian",10362,179,NA,NA,"Midwest","Divided",327551
+"181",2021-03-07,"Michigan","AIAN",3596,79,NA,NA,"Midwest","Divided",45662
+"182",2021-03-07,"Michigan","NHPI",NA,NA,NA,NA,"Midwest","Divided",2780
+"183",2021-03-07,"Michigan","Multiracial",25954,270,NA,NA,"Midwest","Divided",543305
+"184",2021-03-07,"Michigan","Other",35465,425,NA,NA,"Midwest","Divided",157999
+"185",2021-03-07,"Minnesota","Total",490011,6550,25978,NA,"Midwest","Divided",5706494
+"186",2021-03-07,"Minnesota","White",327714,5440,16798,NA,"Midwest","Divided",4537219
+"187",2021-03-07,"Minnesota","Black",39044,319,3007,NA,"Midwest","Divided",382082
+"188",2021-03-07,"Minnesota","Asian",21470,259,1470,NA,"Midwest","Divided",286146
+"189",2021-03-07,"Minnesota","AIAN",4634,90,457,NA,"Midwest","Divided",51434
+"190",2021-03-07,"Minnesota","NHPI",556,6,31,NA,"Midwest","Divided",2324
+"191",2021-03-07,"Minnesota","Multiracial",8424,101,665,NA,"Midwest","Divided",302989
+"192",2021-03-07,"Minnesota","Other",6470,23,237,NA,"Midwest","Divided",133098
+"193",2021-03-07,"Missouri","Total",480643,8161,NA,4565866,"Midwest","Red",6154913
+"194",2021-03-07,"Missouri","White",252254,5162,NA,1781880,"Midwest","Red",4884165
+"195",2021-03-07,"Missouri","Black",42276,1069,NA,355094,"Midwest","Red",693892
+"196",2021-03-07,"Missouri","Asian",4317,67,NA,44514,"Midwest","Red",127044
+"197",2021-03-07,"Missouri","AIAN",942,12,NA,6838,"Midwest","Red",17559
+"198",2021-03-07,"Missouri","NHPI",22,1,NA,40,"Midwest","Red",8831
+"199",2021-03-07,"Missouri","Multiracial",108,0,NA,192,"Midwest","Red",331228
+"200",2021-03-07,"Missouri","Other",63952,1295,NA,1602892,"Midwest","Red",91703
+"201",2021-03-07,"Mississippi","Total",297581,6808,NA,NA,"South","Red",2961279
+"202",2021-03-07,"Mississippi","White",140893,3670,NA,NA,"South","Red",1685024
+"203",2021-03-07,"Mississippi","Black",97848,2671,NA,NA,"South","Red",1101836
+"204",2021-03-07,"Mississippi","Asian",1415,18,NA,NA,"South","Red",29041
+"205",2021-03-07,"Mississippi","AIAN",2215,114,NA,NA,"South","Red",12777
+"206",2021-03-07,"Mississippi","NHPI",NA,NA,NA,NA,"South","Red",1200
+"207",2021-03-07,"Mississippi","Multiracial",NA,NA,NA,NA,"South","Red",87204
+"208",2021-03-07,"Mississippi","Other",10036,103,NA,NA,"South","Red",41764
+"209",2021-03-07,"Montana","Total",100914,1381,4630,NA,"West","Red",1084225
+"210",2021-03-07,"Montana","White",63627,856,2233,NA,"West","Red",943827
+"211",2021-03-07,"Montana","Black",460,1,23,NA,"West","Red",6026
+"212",2021-03-07,"Montana","Asian",342,1,NA,NA,"West","Red",9211
+"213",2021-03-07,"Montana","AIAN",8156,205,453,NA,"West","Red",63493
+"214",2021-03-07,"Montana","NHPI",114,1,NA,NA,"West","Red",681
+"215",2021-03-07,"Montana","Multiracial",NA,NA,NA,NA,"West","Red",57010
+"216",2021-03-07,"Montana","Other",6782,121,NA,NA,"West","Red",11592
+"217",2021-03-07,"North Carolina","Total",872176,11502,NA,NA,"Midatlantic","Divided",10439388
+"218",2021-03-07,"North Carolina","White",442322,7160,NA,NA,"Midatlantic","Divided",6800458
+"219",2021-03-07,"North Carolina","Black",146993,2662,NA,NA,"Midatlantic","Divided",2192455
+"220",2021-03-07,"North Carolina","Asian",13620,120,NA,NA,"Midatlantic","Divided",325670
+"221",2021-03-07,"North Carolina","AIAN",11199,126,NA,NA,"Midatlantic","Divided",109600
+"222",2021-03-07,"North Carolina","NHPI",NA,NA,NA,NA,"Midatlantic","Divided",6948
+"223",2021-03-07,"North Carolina","Multiracial",NA,NA,NA,NA,"Midatlantic","Divided",613129
+"224",2021-03-07,"North Carolina","Other",98470,716,NA,NA,"Midatlantic","Divided",421954
+"225",2021-03-07,"North Dakota","Total",100391,1478,NA,NA,"Midwest","Red",779094
+"226",2021-03-07,"North Dakota","White",55720,NA,NA,NA,"Midwest","Red",656425
+"227",2021-03-07,"North Dakota","Black",2881,NA,NA,NA,"Midwest","Red",25233
+"228",2021-03-07,"North Dakota","Asian",1317,NA,NA,NA,"Midwest","Red",12474
+"229",2021-03-07,"North Dakota","AIAN",4376,NA,NA,NA,"Midwest","Red",36284
+"230",2021-03-07,"North Dakota","NHPI",NA,NA,NA,NA,"Midwest","Red",1459
+"231",2021-03-07,"North Dakota","Multiracial",1377,NA,NA,NA,"Midwest","Red",34294
+"232",2021-03-07,"North Dakota","Other",28,NA,NA,NA,"Midwest","Red",10705
+"233",2021-03-07,"Nebraska","Total",201608,2091,6147,NA,"Midwest","Red",1961504
+"234",2021-03-07,"Nebraska","White",104512,1360,4318,NA,"Midwest","Red",1603239
+"235",2021-03-07,"Nebraska","Black",5117,58,304,NA,"Midwest","Red",93555
+"236",2021-03-07,"Nebraska","Asian",2809,30,133,NA,"Midwest","Red",48874
+"237",2021-03-07,"Nebraska","AIAN",1257,26,93,NA,"Midwest","Red",18550
+"238",2021-03-07,"Nebraska","NHPI",224,1,12,NA,"Midwest","Red",1318
+"239",2021-03-07,"Nebraska","Multiracial",NA,NA,NA,NA,"Midwest","Red",124088
+"240",2021-03-07,"Nebraska","Other",3861,26,174,NA,"Midwest","Red",69315
+"241",2021-03-07,"New Hampshire","Total",76861,1184,1131,NA,"Northeast","Red",1377529
+"242",2021-03-07,"New Hampshire","White",39457,1110,865,NA,"Northeast","Red",1241594
+"243",2021-03-07,"New Hampshire","Black",1025,13,38,NA,"Northeast","Red",20920
+"244",2021-03-07,"New Hampshire","Asian",1036,12,40,NA,"Northeast","Red",36352
+"245",2021-03-07,"New Hampshire","AIAN",87,1,NA,NA,"Northeast","Red",2070
+"246",2021-03-07,"New Hampshire","NHPI",0,0,NA,NA,"Northeast","Red",348
+"247",2021-03-07,"New Hampshire","Multiracial",394,2,NA,NA,"Northeast","Red",63317
+"248",2021-03-07,"New Hampshire","Other",2066,12,25,NA,"Northeast","Red",15009
+"249",2021-03-07,"New Jersey","Total",812609,23574,64396,NA,"Northeast","Blue",9288994
+"250",2021-03-07,"New Jersey","White",268537,12932,26086,NA,"Northeast","Blue",5528604
+"251",2021-03-07,"New Jersey","Black",69860,3743,11312,NA,"Northeast","Blue",1213265
+"252",2021-03-07,"New Jersey","Asian",30370,1178,2843,NA,"Northeast","Blue",913364
+"253",2021-03-07,"New Jersey","AIAN",NA,NA,NA,NA,"Northeast","Blue",29780
+"254",2021-03-07,"New Jersey","NHPI",NA,NA,NA,NA,"Northeast","Blue",2554
+"255",2021-03-07,"New Jersey","Multiracial",NA,NA,NA,NA,"Northeast","Blue",792890
+"256",2021-03-07,"New Jersey","Other",107239,912,4241,NA,"Northeast","Blue",768606
+"257",2021-03-07,"New Mexico","Total",186922,3808,13252,NA,"West","Blue",2117522
+"258",2021-03-07,"New Mexico","White",32321,1097,2460,NA,"West","Blue",1250614
+"259",2021-03-07,"New Mexico","Black",2360,49,141,NA,"West","Blue",44894
+"260",2021-03-07,"New Mexico","Asian",1688,27,118,NA,"West","Blue",34400
+"261",2021-03-07,"New Mexico","AIAN",30459,1064,3966,NA,"West","Blue",198140
+"262",2021-03-07,"New Mexico","NHPI",288,NA,24,NA,"West","Blue",1849
+"263",2021-03-07,"New Mexico","Multiracial",NA,NA,NA,NA,"West","Blue",348588
+"264",2021-03-07,"New Mexico","Other",4912,NA,177,NA,"West","Blue",233978
+"265",2021-03-07,"Nevada","Total",296190,5037,NA,1427948,"West","Blue",3104614
+"266",2021-03-07,"Nevada","White",108109,2719,NA,675419,"West","Blue",1732783
+"267",2021-03-07,"Nevada","Black",22510,468,NA,137083,"West","Blue",290223
+"268",2021-03-07,"Nevada","Asian",24287,594,NA,99956,"West","Blue",263063
+"269",2021-03-07,"Nevada","AIAN",1480,45,NA,11423,"West","Blue",40745
+"270",2021-03-07,"Nevada","NHPI",NA,NA,NA,NA,"West","Blue",21884
+"271",2021-03-07,"Nevada","Multiracial",NA,NA,NA,NA,"West","Blue",395499
+"272",2021-03-07,"Nevada","Other",33173,5,NA,254174,"West","Blue",360620
+"273",2021-03-07,"New York","Total",1681169,48591,89995,NA,"Northeast","Blue",20201249
+"274",2021-03-07,"New York","White",NA,17007,21649,NA,"Northeast","Blue",11749652
+"275",2021-03-07,"New York","Black",NA,9812,23650,NA,"Northeast","Blue",3011116
+"276",2021-03-07,"New York","Asian",NA,3011,8213,NA,"Northeast","Blue",1767598
+"277",2021-03-07,"New York","AIAN",NA,NA,NA,NA,"Northeast","Blue",93384
+"278",2021-03-07,"New York","NHPI",NA,NA,NA,NA,"Northeast","Blue",9120
+"279",2021-03-07,"New York","Multiracial",NA,NA,NA,NA,"Northeast","Blue",1485013
+"280",2021-03-07,"New York","Other",NA,2834,NA,NA,"Northeast","Blue",1878496
+"281",2021-03-07,"Ohio","Total",978471,17656,50881,NA,"Midwest","Red",11799448
+"282",2021-03-07,"Ohio","White",579544,15026,35458,NA,"Midwest","Red",9281702
+"283",2021-03-07,"Ohio","Black",101785,2157,9272,NA,"Midwest","Red",1449450
+"284",2021-03-07,"Ohio","Asian",13511,139,631,NA,"Midwest","Red",283278
+"285",2021-03-07,"Ohio","AIAN",1055,16,65,NA,"Midwest","Red",17094
+"286",2021-03-07,"Ohio","NHPI",693,3,55,NA,"Midwest","Red",4037
+"287",2021-03-07,"Ohio","Multiracial",23359,26,1691,NA,"Midwest","Red",581637
+"288",2021-03-07,"Ohio","Other",53199,129,1290,NA,"Midwest","Red",157485
+"289",2021-03-07,"Oklahoma","Total",428997,4534,NA,NA,"South","Red",3959353
+"290",2021-03-07,"Oklahoma","White",244180,3255,NA,NA,"South","Red",2716667
+"291",2021-03-07,"Oklahoma","Black",23119,271,NA,NA,"South","Red",284453
+"292",2021-03-07,"Oklahoma","Asian",7852,57,NA,NA,"South","Red",91720
+"293",2021-03-07,"Oklahoma","AIAN",41839,399,NA,NA,"South","Red",298628
+"294",2021-03-07,"Oklahoma","NHPI",NA,NA,NA,NA,"South","Red",7313
+"295",2021-03-07,"Oklahoma","Multiracial",NA,NA,NA,NA,"South","Red",447289
+"296",2021-03-07,"Oklahoma","Other",14388,119,NA,NA,"South","Red",124427
+"297",2021-03-07,"Oregon","Total",157285,2296,8714,NA,"Pacific","Blue",4237256
+"298",2021-03-07,"Oregon","White",76447,1531,5270,NA,"Pacific","Blue",3328095
+"299",2021-03-07,"Oregon","Black",3791,46,273,NA,"Pacific","Blue",79593
+"300",2021-03-07,"Oregon","Asian",4850,58,311,NA,"Pacific","Blue",187852
+"301",2021-03-07,"Oregon","AIAN",2769,41,220,NA,"Pacific","Blue",46880
+"302",2021-03-07,"Oregon","NHPI",1404,20,146,NA,"Pacific","Blue",17139
+"303",2021-03-07,"Oregon","Multiracial",2534,47,160,NA,"Pacific","Blue",389281
+"304",2021-03-07,"Oregon","Other",36783,183,1585,NA,"Pacific","Blue",180534
+"305",2021-03-07,"Pennsylvania","Total",948643,24349,NA,NA,"Northeast","Divided",13002700
+"306",2021-03-07,"Pennsylvania","White",487131,19497,NA,NA,"Northeast","Divided",10010379
+"307",2021-03-07,"Pennsylvania","Black",81180,2829,NA,NA,"Northeast","Divided",1407814
+"308",2021-03-07,"Pennsylvania","Asian",16176,379,NA,NA,"Northeast","Divided",473192
+"309",2021-03-07,"Pennsylvania","AIAN",NA,NA,NA,NA,"Northeast","Divided",20570
+"310",2021-03-07,"Pennsylvania","NHPI",NA,NA,NA,NA,"Northeast","Divided",4256
+"311",2021-03-07,"Pennsylvania","Multiracial",NA,NA,NA,NA,"Northeast","Divided",667575
+"312",2021-03-07,"Pennsylvania","Other",12096,1,NA,NA,"Northeast","Divided",405422
+"313",2021-03-07,"Rhode Island","Total",128121,2541,9020,802636,"Northeast","Blue",1097379
+"314",2021-03-07,"Rhode Island","White",59389,1816,4280,219702,"Northeast","Blue",816308
+"315",2021-03-07,"Rhode Island","Black",7780,104,593,18349,"Northeast","Blue",67615
+"316",2021-03-07,"Rhode Island","Asian",2342,37,167,8702,"Northeast","Blue",37881
+"317",2021-03-07,"Rhode Island","AIAN",309,1,20,4717,"Northeast","Blue",4072
+"318",2021-03-07,"Rhode Island","NHPI",0,0,0,521,"Northeast","Blue",761
+"319",2021-03-07,"Rhode Island","Multiracial",1200,1,39,3660,"Northeast","Blue",91944
+"320",2021-03-07,"Rhode Island","Other",2332,1,203,20203,"Northeast","Blue",75669
+"321",2021-03-07,"South Carolina","Total",525865,8754,20725,NA,"South","Red",5118425
+"322",2021-03-07,"South Carolina","White",238659,4727,10646,NA,"South","Red",3342861
+"323",2021-03-07,"South Carolina","Black",107296,2408,7383,NA,"South","Red",1326209
+"324",2021-03-07,"South Carolina","Asian",5178,54,166,NA,"South","Red",85834
+"325",2021-03-07,"South Carolina","AIAN",NA,NA,NA,NA,"South","Red",15617
+"326",2021-03-07,"South Carolina","NHPI",NA,NA,NA,NA,"South","Red",2722
+"327",2021-03-07,"South Carolina","Multiracial",NA,NA,NA,NA,"South","Red",246238
+"328",2021-03-07,"South Carolina","Other",57311,389,1166,NA,"South","Red",123269
+"329",2021-03-07,"South Dakota","Total",113589,1900,6705,NA,"Midwest","Red",886667
+"330",2021-03-07,"South Dakota","White",84776,1499,4785,NA,"Midwest","Red",731624
+"331",2021-03-07,"South Dakota","Black",2519,7,134,NA,"Midwest","Red",19525
+"332",2021-03-07,"South Dakota","Asian",1468,16,72,NA,"Midwest","Red",12754
+"333",2021-03-07,"South Dakota","AIAN",13518,265,1305,NA,"Midwest","Red",70948
+"334",2021-03-07,"South Dakota","NHPI",NA,NA,NA,NA,"Midwest","Red",494
+"335",2021-03-07,"South Dakota","Multiracial",NA,NA,NA,NA,"Midwest","Red",44430
+"336",2021-03-07,"South Dakota","Other",1662,14,71,NA,"Midwest","Red",10567
+"337",2021-03-07,"Tennessee","Total",783484,11547,NA,NA,"South","Red",6910840
+"338",2021-03-07,"Tennessee","White",489782,8730,NA,NA,"South","Red",5182736
+"339",2021-03-07,"Tennessee","Black",102220,1994,NA,NA,"South","Red",1126815
+"340",2021-03-07,"Tennessee","Asian",6937,67,NA,NA,"South","Red",128630
+"341",2021-03-07,"Tennessee","AIAN",1032,9,NA,NA,"South","Red",14118
+"342",2021-03-07,"Tennessee","NHPI",564,6,NA,NA,"South","Red",4684
+"343",2021-03-07,"Tennessee","Multiracial",NA,NA,NA,NA,"South","Red",326851
+"344",2021-03-07,"Tennessee","Other",61751,385,NA,NA,"South","Red",139938
+"345",2021-03-07,"Texas","Total",2686818,44451,NA,NA,"South","Red",29145505
+"346",2021-03-07,"Texas","White",25581,18276,NA,NA,"South","Red",17293460
+"347",2021-03-07,"Texas","Black",12672,4252,NA,NA,"South","Red",3552579
+"348",2021-03-07,"Texas","Asian",933,898,NA,NA,"South","Red",1511069
+"349",2021-03-07,"Texas","AIAN",NA,NA,NA,NA,"South","Red",169576
+"350",2021-03-07,"Texas","NHPI",NA,NA,NA,NA,"South","Red",27350
+"351",2021-03-07,"Texas","Multiracial",NA,NA,NA,NA,"South","Red",4407783
+"352",2021-03-07,"Texas","Other",428,231,NA,NA,"South","Red",2281525
+"353",2021-03-07,"Utah","Total",374850,1976,14891,2248121,"West","Red",3271616
+"354",2021-03-07,"Utah","White",238411,1329,9312,1508818,"West","Red",2705194
+"355",2021-03-07,"Utah","Black",5001,18,246,29013,"West","Red",37712
+"356",2021-03-07,"Utah","Asian",7107,59,349,42053,"West","Red",77761
+"357",2021-03-07,"Utah","AIAN",5016,72,459,23644,"West","Red",32948
+"358",2021-03-07,"Utah","NHPI",8931,57,765,32491,"West","Red",30748
+"359",2021-03-07,"Utah","Multiracial",NA,NA,NA,NA,"West","Red",224725
+"360",2021-03-07,"Utah","Other",26238,119,1114,131519,"West","Red",174721
+"361",2021-03-07,"Virginia","Total",585700,9596,24661,NA,"Midatlantic","Blue",8631393
+"362",2021-03-07,"Virginia","White",235269,6002,10858,NA,"Midatlantic","Blue",5473610
+"363",2021-03-07,"Virginia","Black",99166,2262,6760,NA,"Midatlantic","Blue",1630355
+"364",2021-03-07,"Virginia","Asian",19984,337,1087,NA,"Midatlantic","Blue",591088
+"365",2021-03-07,"Virginia","AIAN",756,24,36,NA,"Midatlantic","Blue",23728
+"366",2021-03-07,"Virginia","NHPI",NA,NA,NA,NA,"Midatlantic","Blue",6185
+"367",2021-03-07,"Virginia","Multiracial",5823,62,194,NA,"Midatlantic","Blue",596298
+"368",2021-03-07,"Virginia","Other",15947,66,494,NA,"Midatlantic","Blue",303247
+"369",2021-03-07,"Vermont","Total",16083,208,NA,NA,"Northeast","Blue",643077
+"370",2021-03-07,"Vermont","White",12735,185,NA,NA,"Northeast","Blue",594131
+"371",2021-03-07,"Vermont","Black",613,2,NA,NA,"Northeast","Blue",8000
+"372",2021-03-07,"Vermont","Asian",746,5,NA,NA,"Northeast","Blue",10824
+"373",2021-03-07,"Vermont","AIAN",20,1,NA,NA,"Northeast","Blue",1336
+"374",2021-03-07,"Vermont","NHPI",NA,NA,NA,NA,"Northeast","Blue",148
+"375",2021-03-07,"Vermont","Multiracial",NA,NA,NA,NA,"Northeast","Blue",25809
+"376",2021-03-07,"Vermont","Other",414,2,NA,NA,"Northeast","Blue",3568
+"377",2021-03-07,"Washington","Total",344532,5041,19599,NA,"Pacific","Blue",7705281
+"378",2021-03-07,"Washington","White",96572,3571,6056,NA,"Pacific","Blue",5374874
+"379",2021-03-07,"Washington","Black",10932,161,623,NA,"Pacific","Blue",301477
+"380",2021-03-07,"Washington","Asian",12525,383,871,NA,"Pacific","Blue",708647
+"381",2021-03-07,"Washington","AIAN",3231,107,236,NA,"Pacific","Blue",91698
+"382",2021-03-07,"Washington","NHPI",3691,81,355,NA,"Pacific","Blue",53003
+"383",2021-03-07,"Washington","Multiracial",5823,59,239,NA,"Pacific","Blue",759279
+"384",2021-03-07,"Washington","Other",3133,71,220,NA,"Pacific","Blue",399571
+"385",2021-03-07,"Wisconsin","Total",621654,7106,26457,NA,"Midwest","Divided",5893718
+"386",2021-03-07,"Wisconsin","White",481041,6144,18668,NA,"Midwest","Divided",4854979
+"387",2021-03-07,"Wisconsin","Black",40549,478,3023,NA,"Midwest","Divided",363331
+"388",2021-03-07,"Wisconsin","Asian",15553,127,563,NA,"Midwest","Divided",169052
+"389",2021-03-07,"Wisconsin","AIAN",7580,97,410,NA,"Midwest","Divided",43759
+"390",2021-03-07,"Wisconsin","NHPI",NA,NA,NA,NA,"Midwest","Divided",2261
+"391",2021-03-07,"Wisconsin","Multiracial",NA,NA,NA,NA,"Midwest","Divided",320056
+"392",2021-03-07,"Wisconsin","Other",34002,106,312,NA,"Midwest","Divided",128690
+"393",2021-03-07,"West Virginia","Total",133445,2325,NA,NA,"Midatlantic","Red",1793716
+"394",2021-03-07,"West Virginia","White",111202,2049,NA,NA,"Midatlantic","Red",1639342
+"395",2021-03-07,"West Virginia","Black",4623,57,NA,NA,"Midatlantic","Red",61227
+"396",2021-03-07,"West Virginia","Asian",NA,NA,NA,NA,"Midatlantic","Red",13602
+"397",2021-03-07,"West Virginia","AIAN",NA,NA,NA,NA,"Midatlantic","Red",1730
+"398",2021-03-07,"West Virginia","NHPI",NA,NA,NA,NA,"Midatlantic","Red",657
+"399",2021-03-07,"West Virginia","Multiracial",NA,NA,NA,NA,"Midatlantic","Red",66905
+"400",2021-03-07,"West Virginia","Other",3092,34,NA,NA,"Midatlantic","Red",9504
+"401",2021-03-07,"Wyoming","Total",54764,682,NA,NA,"West","Red",576851
+"402",2021-03-07,"Wyoming","White",28117,606,NA,NA,"West","Red",504798
+"403",2021-03-07,"Wyoming","Black",425,2,NA,NA,"West","Red",4891
+"404",2021-03-07,"Wyoming","Asian",281,6,NA,NA,"West","Red",4717
+"405",2021-03-07,"Wyoming","AIAN",2250,51,NA,NA,"West","Red",12359
+"406",2021-03-07,"Wyoming","NHPI",134,1,NA,NA,"West","Red",636
+"407",2021-03-07,"Wyoming","Multiracial",NA,NA,NA,NA,"West","Red",34024
+"408",2021-03-07,"Wyoming","Other",1726,8,NA,NA,"West","Red",16504
