@@ -106,6 +106,8 @@ ctcov2$Race<-as.factor(ctcov2$Race)
 levels(ctcov2$Race)
 ```
 
+Code from here will not run without inputting your Census API Key at the top of this code chunk.
+
 ```{r}
 # Set your API key if not already set
 #census_api_key("APIkey", install = TRUE)
@@ -144,11 +146,9 @@ ctcov2merged <- ctcov2 %>%
 
 ```
 
-
 ```{r}
 ctcov2merged<-ctcov2merged|>filter(Deaths >= 0)
 ```
-
 
 ```{r}
 ctcov3<- ctcov2merged |>
@@ -170,7 +170,9 @@ covwithraces<-ctcov3|>
   select(c(1,2,3,4,5,6,7,8,9,12))
 glimpse(covwithraces)
 ```
+
 Fixing data types
+
 ```{r}
 covwithraces<-covwithraces|>
   rename('Population_By_Race'='population by race')

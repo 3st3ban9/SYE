@@ -9,9 +9,11 @@ editor: visual
 ```{r}
 rm(list = ls())
 library(here)
+library(multcomp)
 library(tidyverse)
 library(ggfortify)
 library(MASS)
+library(emmeans)
 covid<-read.csv(here("data","CovidbyRaceandState.csv"))
 covid<-covid|>dplyr::select(c(2:11))
 glimpse(covid)
@@ -29,3 +31,168 @@ glimpse(covid)
 ```
 
 # Stats
+
+## Deaths Rate per 1000 \~ Race
+
+```{r}
+covid1<-covid|>
+  filter(Race!="Total")
+```
+
+```{r}
+ggplot(covid1,aes(Deaths/Population_By_Race))+
+  geom_histogram()#+
+  #facet_wrap(~Race)
+```
+
+```{r}
+ggplot(covid1,aes(Race,1000*Deaths/Population_By_Race))+
+  geom_boxplot()
+```
+
+```{r}
+dprmod<-lm(1000*Deaths/Population_By_Race~Race,data=covid1)
+autoplot(dprmod)
+```
+
+```{r}
+anova(dprmod)
+summary(dprmod)
+```
+
+tukey test
+
+```{r}
+# Perform Tukey HSD test
+tukey_dpr <- emmeans(dprmod, pairwise ~ Race, adjust = "tukey")
+
+# Print results
+tukey_dpr$contrasts
+```
+
+```{r}
+# Generate CLD (Compact Letter Display)
+cld_dpr <- cld(tukey_dpr$emmeans,
+                 Letters = letters,
+                 adjust = "tukey")
+
+print(cld_dpr)
+
+```
+
+visualize what this means:
+
+```{r}
+# Plot estimated marginal means with error bars and letter labels
+ggplot(cld_dpr, aes(x = Race, y = emmean)) +
+  geom_col(fill = "skyblue", color = "black") +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
+  labs(title = "Estimated Marginal Means of Death Rates",
+       x = "Race",
+       y = "Estimated Mean") +
+  theme_minimal()
+
+```
+
+## Multiple Regression
+
+```{r}
+ggplot(covid1,aes(Deaths/Population_By_Race))+
+  geom_histogram()
+```
+
+```{r}
+multreg<-lm(1000*Deaths/Population_By_Race~Race+Region+Gov_Control,data = covid1)
+autoplot(multreg)
+```
+
+```{r}
+anova(multreg)
+summary(multreg)
+```
+
+```{r}
+tukeymult<-emmeans(multreg,pairwise~Gov_Control,adjust="tukey")
+summary(tukeymult$contrasts)
+tukeymult2<-emmeans(multreg,pairwise~Race,adjust="tukey")
+summary(tukeymult2$contrasts)
+tukeymult3<-emmeans(multreg,pairwise~Region,adjust="tukey")
+summary(tukeymult3$contrasts)
+```
+
+WEird?
+
+## Death Rate per 1000 \~ Government Control
+
+```{r}
+ggplot(covid1,aes(Gov_Control,1000*Deaths/Population_By_Race))+
+  geom_boxplot()
+```
+
+```{r}
+dgcmod<-lm(1000*Deaths/Population_By_Race~Gov_Control,data=covid1)
+autoplot(dgcmod)
+```
+
+```{r}
+anova(dgcmod)
+summary(dgcmod)
+```
+
+```{r}
+tukey_dgc <- emmeans(dgcmod, pairwise ~ Gov_Control, adjust = "tukey")
+cld_dgc <- cld(tukey_dgc$emmeans,
+                 Letters = letters,
+                 adjust = "tukey")
+print(cld_dgc)
+```
+
+```{r}
+ggplot(cld_dgc, aes(x = Gov_Control, y = emmean)) +
+  geom_col(fill = "skyblue", color = "black") +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
+  labs(title = "Estimated Marginal Means of Death Rates",
+       x = "Government Control",
+       y = "Estimated Mean") +
+  theme_minimal()
+
+```
+
+## Death Rate per 1000 \~ Region
+
+```{r}
+ggplot(covid1,aes(Region,1000*Deaths/Population_By_Race))+
+  geom_boxplot()
+```
+
+```{r}
+dregmod<-lm(1000*Deaths/Population_By_Race~Region,data=covid1)
+autoplot(dregmod)
+```
+
+```{r}
+anova(dregmod)
+summary(dregmod)
+```
+
+```{r}
+tukey_dreg <- emmeans(dregmod, pairwise ~ Region, adjust = "tukey")
+cld_dreg <- cld(tukey_dreg$emmeans,
+                 Letters = letters,
+                 adjust = "tukey")
+print(cld_dreg)
+```
+
+```{r}
+ggplot(cld_dreg, aes(x = Region, y = emmean)) +
+  geom_col(fill = "skyblue", color = "black") +
+  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
+  labs(title = "Estimated Marginal Means of Death Rates",
+       x = "Region",
+       y = "Estimated Mean") +
+  theme_minimal()
+
+```
