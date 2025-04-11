@@ -14,6 +14,9 @@ library(tidyverse)
 library(ggfortify)
 library(MASS)
 library(emmeans)
+library(DHARMa)
+library(mgcv)
+library(mgcViz)
 covid<-read.csv(here("data","CovidbyRaceandState.csv"))
 covid<-covid|>dplyr::select(c(2:11))
 glimpse(covid)
@@ -98,6 +101,11 @@ ggplot(cld_dpr, aes(x = Race, y = emmean)) +
 ## Multiple Regression
 
 ```{r}
+covid1<-covid1|>
+  mutate(death_rate_1000=1000*Deaths/Population_By_Race)#creating a column for the death rate per 1000
+```
+
+```{r}
 ggplot(covid1,aes(Deaths/Population_By_Race))+
   geom_histogram()
 ```
@@ -122,6 +130,32 @@ summary(tukeymult3$contrasts)
 ```
 
 WEird?
+
+```{r}
+summary(covid1$death_rate_1000)
+```
+
+There are zeroes, which we'll assume to be impossible, so we'll add 0.0001 to work with the model
+
+```{r}
+covid1<-covid1|>
+  mutate(death_rate_1000_pos=death_rate_1000+0.0001)
+```
+
+```{r}
+gamma_mod <- glm(death_rate_1000_pos ~ Gov_Control + Race +Region,
+                 data = covid1,
+                 family = Gamma(link = "log"))
+
+simulateResiduals(gamma_mod, plot = TRUE)
+```
+
+```{r}
+anova(gamma_mod)
+summary(gamma_mod)
+emmeans(gamma_mod, ~ Gov_Control, type = "response")
+emmeans(gamma_mod, ~ Race, type = "response")
+```
 
 ## Death Rate per 1000 \~ Government Control
 
