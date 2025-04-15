@@ -17,6 +17,8 @@ library(emmeans)
 library(DHARMa)
 library(mgcv)
 library(mgcViz)
+library(betareg)
+
 covid<-read.csv(here("data","CovidbyRaceandState.csv"))
 covid<-covid|>dplyr::select(c(2:11))
 glimpse(covid)
@@ -35,72 +37,12 @@ glimpse(covid)
 
 # Stats
 
-## Deaths Rate per 1000 \~ Race
+## Multiple Regression
 
 ```{r}
 covid1<-covid|>
   filter(Race!="Total")
-```
-
-```{r}
-ggplot(covid1,aes(Deaths/Population_By_Race))+
-  geom_histogram()#+
-  #facet_wrap(~Race)
-```
-
-```{r}
-ggplot(covid1,aes(Race,1000*Deaths/Population_By_Race))+
-  geom_boxplot()
-```
-
-```{r}
-dprmod<-lm(1000*Deaths/Population_By_Race~Race,data=covid1)
-autoplot(dprmod)
-```
-
-```{r}
-anova(dprmod)
-summary(dprmod)
-```
-
-tukey test
-
-```{r}
-# Perform Tukey HSD test
-tukey_dpr <- emmeans(dprmod, pairwise ~ Race, adjust = "tukey")
-
-# Print results
-tukey_dpr$contrasts
-```
-
-```{r}
-# Generate CLD (Compact Letter Display)
-cld_dpr <- cld(tukey_dpr$emmeans,
-                 Letters = letters,
-                 adjust = "tukey")
-
-print(cld_dpr)
-
-```
-
-visualize what this means:
-
-```{r}
-# Plot estimated marginal means with error bars and letter labels
-ggplot(cld_dpr, aes(x = Race, y = emmean)) +
-  geom_col(fill = "skyblue", color = "black") +
-  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
-  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
-  labs(title = "Estimated Marginal Means of Death Rates",
-       x = "Race",
-       y = "Estimated Mean") +
-  theme_minimal()
-
-```
-
-## Multiple Regression
-
-```{r}
+  
 covid1<-covid1|>
   mutate(death_rate_1000=1000*Deaths/Population_By_Race)#creating a column for the death rate per 1000
 ```
@@ -142,91 +84,21 @@ covid1<-covid1|>
   mutate(death_rate_1000_pos=death_rate_1000+0.0001)
 ```
 
-```{r}
-gamma_mod <- glm(death_rate_1000_pos ~ Gov_Control + Race +Region,
-                 data = covid1,
-                 family = Gamma(link = "log"))
+### book
 
-simulateResiduals(gamma_mod, plot = TRUE)
+```{r}
+covidna<-covid1|>
+  filter(!is.na(Deaths))|>
+  filter(Deaths>0)
+covidna<-covidna|>
+  mutate(death_rate_prop = Deaths / Population_By_Race)
+covidna|>filter(death_rate_prop==0) #Checking for zeroes. All good
 ```
 
 ```{r}
-anova(gamma_mod)
-summary(gamma_mod)
-emmeans(gamma_mod, ~ Gov_Control, type = "response")
-emmeans(gamma_mod, ~ Race, type = "response")
+model_beta <- betareg(death_rate_prop ~ Race * Gov_Control+Region, data = covidna)
+summary(model_beta)
+exp(coef(model_beta))
 ```
 
-## Death Rate per 1000 \~ Government Control
-
-```{r}
-ggplot(covid1,aes(Gov_Control,1000*Deaths/Population_By_Race))+
-  geom_boxplot()
-```
-
-```{r}
-dgcmod<-lm(1000*Deaths/Population_By_Race~Gov_Control,data=covid1)
-autoplot(dgcmod)
-```
-
-```{r}
-anova(dgcmod)
-summary(dgcmod)
-```
-
-```{r}
-tukey_dgc <- emmeans(dgcmod, pairwise ~ Gov_Control, adjust = "tukey")
-cld_dgc <- cld(tukey_dgc$emmeans,
-                 Letters = letters,
-                 adjust = "tukey")
-print(cld_dgc)
-```
-
-```{r}
-ggplot(cld_dgc, aes(x = Gov_Control, y = emmean)) +
-  geom_col(fill = "skyblue", color = "black") +
-  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
-  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
-  labs(title = "Estimated Marginal Means of Death Rates",
-       x = "Government Control",
-       y = "Estimated Mean") +
-  theme_minimal()
-
-```
-
-## Death Rate per 1000 \~ Region
-
-```{r}
-ggplot(covid1,aes(Region,1000*Deaths/Population_By_Race))+
-  geom_boxplot()
-```
-
-```{r}
-dregmod<-lm(1000*Deaths/Population_By_Race~Region,data=covid1)
-autoplot(dregmod)
-```
-
-```{r}
-anova(dregmod)
-summary(dregmod)
-```
-
-```{r}
-tukey_dreg <- emmeans(dregmod, pairwise ~ Region, adjust = "tukey")
-cld_dreg <- cld(tukey_dreg$emmeans,
-                 Letters = letters,
-                 adjust = "tukey")
-print(cld_dreg)
-```
-
-```{r}
-ggplot(cld_dreg, aes(x = Region, y = emmean)) +
-  geom_col(fill = "skyblue", color = "black") +
-  geom_errorbar(aes(ymin = lower.CL, ymax = upper.CL), width = 0.2) +
-  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
-  labs(title = "Estimated Marginal Means of Death Rates",
-       x = "Region",
-       y = "Estimated Mean") +
-  theme_minimal()
-
-```
+inter-group dynamics? controlled for differences in populations, but not necessarily how those populations interact?
