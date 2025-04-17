@@ -35,56 +35,26 @@ covid$Gov_Control<-as.factor(covid$Gov_Control)
 glimpse(covid)
 ```
 
-# Stats
+# Multiple Regression
 
-## Multiple Regression
-
-```{r}
-covid1<-covid|>
-  filter(Race!="Total")
-  
-covid1<-covid1|>
-  mutate(death_rate_1000=1000*Deaths/Population_By_Race)#creating a column for the death rate per 1000
-```
+## Setting up for our model
 
 ```{r}
-ggplot(covid1,aes(Deaths/Population_By_Race))+
-  geom_histogram()
+# Extract total population from rows where Race == "Total"
+state_totals <- covid|>
+  filter(Race == "Total")|>
+  select(State, Total_Population = Population_By_Race)
+# Remove "Total" rows from the main data
+covid_filtered <- covid|>
+  filter(Race != "Total")|>
+  left_join(state_totals, by = "State")
+# Create Race_Proportion variable
+covid1 <- covid_filtered|>
+  mutate(Race_Proportion = Population_By_Race / Total_Population)
+summary(covid1$Race_Proportion)
 ```
 
-```{r}
-multreg<-lm(1000*Deaths/Population_By_Race~Race+Region+Gov_Control,data = covid1)
-autoplot(multreg)
-```
-
-```{r}
-anova(multreg)
-summary(multreg)
-```
-
-```{r}
-tukeymult<-emmeans(multreg,pairwise~Gov_Control,adjust="tukey")
-summary(tukeymult$contrasts)
-tukeymult2<-emmeans(multreg,pairwise~Race,adjust="tukey")
-summary(tukeymult2$contrasts)
-tukeymult3<-emmeans(multreg,pairwise~Region,adjust="tukey")
-summary(tukeymult3$contrasts)
-```
-
-WEird?
-
-```{r}
-summary(covid1$death_rate_1000)
-```
-
-There are zeroes, which we'll assume to be impossible, so we'll add 0.0001 to work with the model
-
-```{r}
-covid1<-covid1|>
-  mutate(death_rate_1000_pos=death_rate_1000+0.0001)
-```
-
-### book
+Taking out super low proportions due to skewing caused by such low numbers, also taking zeros out.
 
 ```{r}
 covidna<-covid1|>
@@ -92,13 +62,93 @@ covidna<-covid1|>
   filter(Deaths>0)
 covidna<-covidna|>
   mutate(death_rate_prop = Deaths / Population_By_Race)
-covidna|>filter(death_rate_prop==0) #Checking for zeroes. All good
+covidna<-covidna|>
+  filter(Race_Proportion>=0.005)
+```
+
+## Visualize distribution of death rate
+
+```{r}
+ggplot(covidna,aes(1000*Deaths/Population_By_Race))+
+  geom_histogram()
+```
+
+## Fitting and analyzing a model
+
+must set the baseline levels to compare to
+
+```{r}
+covidna <- covidna|>
+  mutate(Race = relevel(factor(Race), ref = "White"))
+covidna <- covidna|>
+  mutate(Gov_Control = relevel(factor(Gov_Control), ref = "Red"))
+covidna <- covidna|>
+  mutate(Region = relevel(factor(Region), ref = "Northeast"))
 ```
 
 ```{r}
-model_beta <- betareg(death_rate_prop ~ Race * Gov_Control+Region, data = covidna)
+model_beta <- betareg(death_rate_prop ~ Race+Gov_Control+Region, data = covidna)
 summary(model_beta)
 exp(coef(model_beta))
 ```
 
-inter-group dynamics? controlled for differences in populations, but not necessarily how those populations interact?
+```{r}
+# Get marginal means (still on response scale)
+race_emm <- emmeans(model_beta, ~ Race)
+# Get confidence intervals on response scale
+race_ci <- confint(race_emm, type = "response")|>
+  as.data.frame()
+# Check to verify:
+names(race_ci)
+# Should include: emmean, lower.CL, upper.CL
+```
+
+```{r}
+# Get compact letter display (still from response-scale estimates)
+race_cld <- cld(race_emm, Letters = letters, type = "response")
+
+# Merge group letters into CI data
+race_df <- race_ci %>%
+  left_join(select(as.data.frame(race_cld), Race, .group), by = "Race")
+
+# Plot
+ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
+  geom_col(fill = "#56B4E9", width = 0.6) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
+  labs(
+    title = "Estimated COVID-19 Death Proportion by Race",
+    x = "Race",
+    y = "Adjusted Proportion (with 95% CI)"
+  ) +
+  theme_bw()
+```
+
+```{r}
+# Get marginal means by Race × Gov_Control × Region
+emm_race_full <- emmeans(model_beta, ~ Race | Gov_Control * Region)
+# Convert to data frame with CIs
+race_ci <- confint(emm_race_full, type = "response")|>
+  as.data.frame()
+# Significance groups per panel (Gov_Control × Region)
+race_cld <- cld(emm_race_full, Letters = letters, type = "response")
+# Merge group letters into CI data
+race_df <- race_ci %>%
+  left_join(select(as.data.frame(race_cld), Race, Gov_Control, Region, .group),
+            by = c("Race", "Gov_Control", "Region"))
+ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
+  geom_col(fill = "#56B4E9", width = 0.6) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 4.5, fontface = "bold") +
+  facet_grid(Region ~ Gov_Control) +  # Facet by Region (rows) and Gov_Control (columns)
+  labs(
+    title = "Adjusted COVID-19 Death Proportion by Race, Region, and Government Control",
+    x = "Race",
+    y = "Estimated Proportion (with 95% CI)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(face = "bold")
+  )
+```
