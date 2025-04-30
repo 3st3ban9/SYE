@@ -1,30 +1,28 @@
 ---
-title: "First Stats with Final .csv"
-format: html
+title: "Ramirez Stats SYE .csv"
+format: docx
 editor: visual
 ---
 
 # Setup
 
-```{r}
+Loading the packages I will use in this project. I also load the data, remove unnecessary columns from it, and take a quick look at its layout.
+
+```{r,echo=TRUE,results='hide',error=FALSE,warning=FALSE,message=FALSE}
 rm(list = ls())
 library(here)
-library(multcomp)
 library(tidyverse)
 library(ggfortify)
-library(MASS)
 library(emmeans)
-library(DHARMa)
-library(mgcv)
-library(mgcViz)
 library(betareg)
+library(multcomp)
 
 covid<-read.csv(here("data","CovidbyRaceandState.csv"))
 covid<-covid|>dplyr::select(c(2:11))
 glimpse(covid)
 ```
 
-fixing data types
+Fixing data types to make sure the stats will work later.
 
 ```{r}
 covid$Date<-ymd(covid$Date)
@@ -35,15 +33,18 @@ covid$Gov_Control<-as.factor(covid$Gov_Control)
 glimpse(covid)
 ```
 
-# Multiple Regression
+# Multiple Regression Death Rates
 
 ## Setting up for our model
+
+Here, I extract the population for when the race is "Total" so i can make a new column for total population. I also create another column for the proportion of each race in each state and then check for zeroes.
 
 ```{r}
 # Extract total population from rows where Race == "Total"
 state_totals <- covid|>
   filter(Race == "Total")|>
-  select(State, Total_Population = Population_By_Race)
+  dplyr::select(State, Population_By_Race)|>
+  dplyr::rename(Total_Population = Population_By_Race)
 # Remove "Total" rows from the main data
 covid_filtered <- covid|>
   filter(Race != "Total")|>
@@ -54,7 +55,7 @@ covid1 <- covid_filtered|>
 summary(covid1$Race_Proportion)
 ```
 
-Taking out super low proportions due to skewing caused by such low numbers, also taking zeros out.
+Taking out super low proportions because such small numbers don't give valuable data for our purposes. Also taking zeros out (redundant but just in case).
 
 ```{r}
 covidna<-covid1|>
@@ -75,7 +76,7 @@ ggplot(covidna,aes(1000*Deaths/Population_By_Race))+
 
 ## Fitting and analyzing a model
 
-must set the baseline levels to compare to
+Must set the baseline levels to compare to. Essentially, the model will compare the races to "White," the state governments to "Red," and the Regions to "Northeast."
 
 ```{r}
 covidna <- covidna|>
@@ -86,11 +87,15 @@ covidna <- covidna|>
   mutate(Region = relevel(factor(Region), ref = "Northeast"))
 ```
 
+Now I finally fit a model. I use a beta regression because I have proportions in the range (0,1) and my data are skewed right. A beta regression does not assume normality and is used for proportions. I also exponentiate the coefficients to get estimate of the proportions of death rates compared to the baselines set earlier (e.g. Asian had 0.62, meaning their expected death rate is about 62% of that of White).
+
 ```{r}
 model_beta <- betareg(death_rate_prop ~ Race+Gov_Control+Region, data = covidna)
 summary(model_beta)
 exp(coef(model_beta))
 ```
+
+Creating 95% confidence intervals
 
 ```{r}
 # Get marginal means (still on response scale)
@@ -100,8 +105,9 @@ race_ci <- confint(race_emm, type = "response")|>
   as.data.frame()
 # Check to verify:
 names(race_ci)
-# Should include: emmean, lower.CL, upper.CL
 ```
+
+Creating significance groups and visualizing data. First I graph the estimated result from our model. I also graph the real death rates (total deaths/total population by race for the entire country).
 
 ```{r}
 # Get compact letter display (still from response-scale estimates)
@@ -109,7 +115,7 @@ race_cld <- cld(race_emm, Letters = letters, type = "response")
 
 # Merge group letters into CI data
 race_df <- race_ci %>%
-  left_join(select(as.data.frame(race_cld), Race, .group), by = "Race")
+  left_join(dplyr::select(as.data.frame(race_cld), Race, .group), by = "Race")
 
 # Plot
 ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
@@ -122,7 +128,18 @@ ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
     y = "Adjusted Proportion (with 95% CI)"
   ) +
   theme_bw()
+#ggsave("EstDeathRate.jpg",width = 10,height = 6)
+
+covidnasum1<-covidna|>
+  group_by(Race)|>
+  summarize(total_death_rate=sum(Deaths)/sum(Population_By_Race))
+ggplot(covidnasum1,aes(factor(Race,levels = c("Multiracial","Asian","Other","Black","White","AIAN","NHPI")),1000*total_death_rate))+
+  geom_col(fill = "#56B4E9", width = 0.6)+
+  labs(x="Race",title = "Overall Death per 1000 Rate by Race")+theme_bw()
+#ggsave("RealDeathProp.jpg",width = 10,height = 6)
 ```
+
+Here is a visualization also broken down by region and state government.
 
 ```{r}
 # Get marginal means by Race × Gov_Control × Region
@@ -134,7 +151,7 @@ race_ci <- confint(emm_race_full, type = "response")|>
 race_cld <- cld(emm_race_full, Letters = letters, type = "response")
 # Merge group letters into CI data
 race_df <- race_ci %>%
-  left_join(select(as.data.frame(race_cld), Race, Gov_Control, Region, .group),
+  left_join(dplyr::select(as.data.frame(race_cld), Race, Gov_Control, Region, .group),
             by = c("Race", "Gov_Control", "Region"))
 ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
   geom_col(fill = "#56B4E9", width = 0.6) +
@@ -143,6 +160,121 @@ ggplot(race_df, aes(x = reorder(Race, emmean), y = emmean)) +
   facet_grid(Region ~ Gov_Control) +  # Facet by Region (rows) and Gov_Control (columns)
   labs(
     title = "Adjusted COVID-19 Death Proportion by Race, Region, and Government Control",
+    x = "Race",
+    y = "Estimated Proportion (with 95% CI)"
+  ) +
+  theme_minimal(base_size = 13) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    strip.text = element_text(face = "bold")
+  )
+```
+
+# Multiple Regression for Case Rates
+
+## Setting up for our model
+
+Taking out super low proportions due to skewing caused by such low numbers, also taking zeros out.
+
+```{r}
+covidnacase<-covid1|>
+  filter(!is.na(Cases))|>
+  filter(Cases>0)
+covidnacase<-covidnacase|>
+  mutate(case_rate_prop = Cases / Population_By_Race)
+covidnacase<-covidnacase|>
+  filter(Race_Proportion>=0.005)
+```
+
+## Visualize distribution of death rate
+
+```{r}
+ggplot(covidnacase,aes(1000*Cases/Population_By_Race))+
+  geom_histogram()
+```
+
+## Fitting and analyzing a model
+
+must set the baseline levels to compare to
+
+```{r}
+covidnacase <- covidnacase|>
+  mutate(Race = relevel(factor(Race), ref = "White"))
+covidnacase <- covidnacase|>
+  mutate(Gov_Control = relevel(factor(Gov_Control), ref = "Red"))
+covidnacase <- covidnacase|>
+  mutate(Region = relevel(factor(Region), ref = "Northeast"))
+```
+
+Fitting the model and exponentiating the coefficients again
+
+```{r}
+model_betacase <- betareg(case_rate_prop ~ Race+Gov_Control+Region, data = covidnacase)
+summary(model_betacase)
+exp(coef(model_betacase))
+```
+
+Confidence intervals
+
+```{r}
+# Get marginal means (still on response scale)
+race_emmcase <- emmeans(model_betacase, ~ Race)
+# Get confidence intervals on response scale
+race_cicase <- confint(race_emmcase, type = "response")|>
+  as.data.frame()
+# Check to verify:
+names(race_cicase)
+```
+
+Two visualizations
+
+```{r}
+# Get compact letter display (still from response-scale estimates)
+race_cldcase <- cld(race_emmcase, Letters = letters, type = "response")
+
+# Merge group letters into CI data
+race_dfcase <- race_cicase %>%
+  left_join(dplyr::select(as.data.frame(race_cldcase), Race, .group), by = "Race")
+
+# Plot
+ggplot(race_dfcase, aes(x = factor(Race,levels = c("Multiracial","Asian","Other","Black","White","AIAN","NHPI")), y = emmean)) +
+  geom_col(fill = "#56B4E9", width = 0.6) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 5, fontface = "bold") +
+  labs(
+    title = "Estimated COVID-19 Proportion of Cases by Race",
+    x = "Race",
+    y = "Adjusted Proportion (with 95% CI)"
+  ) +
+  theme_bw()
+
+ # ggsave("EstCaseRate.jpg",width = 10,height = 6)
+covidnasumcase<-covidnacase|>
+  group_by(Race)|>
+  summarize(total_case_rate=sum(Cases)/sum(Population_By_Race))
+ggplot(covidnasumcase,aes(factor(Race,levels = c("Multiracial","Asian","Other","Black","White","AIAN","NHPI")),1000*total_case_rate))+
+  geom_col(fill = "#56B4E9", width = 0.6)+
+  labs(x="Race",title = "Overall Case Rate per 1000 by Race")+theme_bw()
+#ggsave("RealCaseProp.jpg",width = 10,height = 6)
+```
+
+An extra visualization broken down by Race, Region, and State Government.
+
+```{r}
+emm_race_fullcase <- emmeans(model_betacase, ~ Race | Gov_Control * Region)
+race_cicase <- confint(emm_race_fullcase, type = "response")|>
+  as.data.frame()
+race_cldcase <- cld(emm_race_fullcase, Letters = letters, type = "response")
+race_dfcase <- race_cicase %>%
+  left_join(dplyr::select(as.data.frame(race_cldcase), Race, Gov_Control, Region, .group),
+            by = c("Race", "Gov_Control", "Region"))
+ggplot(race_dfcase, aes(x = reorder(Race, emmean), y = emmean)) +
+  geom_col(fill = "#56B4E9", width = 0.6) +
+  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
+  geom_text(aes(label = .group), vjust = -0.5, size = 4.5, fontface = "bold") +
+  facet_grid(Region ~ Gov_Control) +  
+  labs(
+    title = "Adjusted COVID-19 Case Proportion by Race, Region, and Government Control",
     x = "Race",
     y = "Estimated Proportion (with 95% CI)"
   ) +
