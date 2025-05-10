@@ -91,3 +91,5 @@ Let's start with a simpler model: Deaths as a function of Government Control
 deathgovmod<-glm.nb(Deaths~Gov_Control,data = covtotalslast)
 autoplot(deathgovmod)
 ```
+
+The work here is continued in the next file, called "StatsForFinalCSV.qmd"
